@@ -208,8 +208,8 @@ const clientConfig = extend(true, {}, config, {
   entry: './client.js',
 
   output: {
-    filename: isDebug ? '[name].js?[chunkhash]' : '[name].[chunkhash].js',
-    chunkFilename: isDebug ? '[name].[id].js?[chunkhash]' : '[name].[id].[chunkhash].js',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[id].[chunkhash].js',
   },
 
   target: 'web',

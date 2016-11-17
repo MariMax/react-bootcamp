@@ -7,6 +7,7 @@ import runServer from './runServer';
 import webpackConfig from './webpack.config';
 import clean from './clean';
 import copy from './copy';
+import buildResourceList from './build-resource-list';
 
 process.argv.push('--watch');
 const [config] = webpackConfig;
@@ -45,6 +46,7 @@ async function start() {
     const hotMiddleware = webpackHotMiddleware(bundler.compilers[0]);
 
     let handleBundleComplete = async () => {
+      await run(buildResourceList);
       handleBundleComplete = stats => !stats.stats[1].compilation.errors.length && runServer();
 
       const server = await runServer();

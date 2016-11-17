@@ -47,6 +47,7 @@ class Html extends React.Component {
           )}
           {script && <script src={script} />}
           {chunk && <script src={chunk} />}
+          <script src="/sw-installer.js" />
         </body>
       </html>
     );
