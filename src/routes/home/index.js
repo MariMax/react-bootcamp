@@ -10,7 +10,7 @@ export default {
   async action() {
 
     return {
-      title: 'React Starter Kit',
+      title: 'To Do List',
       component: <Layout><Home /></Layout>,
     };
   },
