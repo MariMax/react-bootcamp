@@ -179,5 +179,5 @@
     "serve": "babel-node tools/run runServer",
     "start": "babel-node tools/run start"
   },
-  "version": "0.0.1"
+  "version": "0.0.2"
 }
