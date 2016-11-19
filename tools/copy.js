@@ -17,6 +17,7 @@ async function copy() {
       scripts: {
         start: 'node server.js',
       },
+      version: pkg.version
     }, null, 2)),
     copyDir('src/content', 'build/content'),
     copyDir('src/public', 'build/public'),

@@ -5,6 +5,7 @@ import bundle from './bundle';
 import render from './render';
 import buildResourceList from './build-resource-list';
 import {findHashes} from './addHash';
+import {addVersion} from './addVersion';
 
 /**
  * Compiles the project from source files into a distributable
@@ -15,7 +16,9 @@ async function build() {
   await run(copy);
   await run(bundle);
   await run(buildResourceList);
+  await run(addVersion);
   await run(findHashes);
+  
 
 
   if (process.argv.includes('--static')) {

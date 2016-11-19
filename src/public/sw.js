@@ -1,7 +1,7 @@
 importScripts('{{/cache-manifest.js|__addHash}}');
 
 const NAME = 'react-bootcamp';
-const VERSION = '1.0.3';
+const VERSION = '{{__version}}';
 
 self.oninstall = evt => {
   const urls = cacheManifest.map(url => {
