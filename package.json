@@ -10,11 +10,8 @@
     "bluebird": "3.4.6",
     "body-parser": "1.15.2",
     "classnames": "2.2.5",
- 
     "cookie-parser": "1.4.3",
-    
     "express": "4.14.0",
-    
     "front-matter": "2.1.0",
     "history": "4.4.0",
     "isomorphic-style-loader": "1.1.0",
@@ -181,5 +178,6 @@
     "render": "babel-node tools/run render",
     "serve": "babel-node tools/run runServer",
     "start": "babel-node tools/run start"
-  }
+  },
+  "version": "0.0.1"
 }
