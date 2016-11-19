@@ -29,11 +29,11 @@ class Html extends React.Component {
           <meta name="apple-mobile-web-app-title" content="To Do List"/>
           <link rel="icon" type="image/png" href="img/icons/favicon-32x32.png" sizes="32x32"/>
           <link rel="icon" type="image/png" href="img/icons/favicon-16x16.png" sizes="16x16"/>
-          <link rel="manifest" href="manifest.json"/>
           <link rel="mask-icon" href="img/icons/safari-pinned-tab.svg" color="#39c2d7"/>
           <meta name="theme-color" content="#464547"/>
           <meta name="msapplication-TileImage" content="img/icons/mstile-144x144.png"/>
           <meta name="msapplication-TileColor" content="#464547"/>
+          <link rel="manifest" href="{{manifest.json|__addHash}}"/>
 
           {style && <style id="css" dangerouslySetInnerHTML={{ __html: style }} />}
         </head>
@@ -47,7 +47,6 @@ class Html extends React.Component {
           )}
           {script && <script src={script} />}
           {chunk && <script src={chunk} />}
-          <script src="/sw-installer.js" />
         </body>
       </html>
     );

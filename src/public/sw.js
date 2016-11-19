@@ -1,7 +1,7 @@
-importScripts('/cache-manifest.js');
+importScripts('{{/cache-manifest.js|__addHash}}');
 
 const NAME = 'react-bootcamp';
-const VERSION = '1';
+const VERSION = '1.0.3';
 
 self.oninstall = evt => {
   const urls = cacheManifest.map(url => {
@@ -38,3 +38,34 @@ self.onactivate = _ => {
 
   self.clients.claim();
 }
+
+self.onfetch = evt => {
+  const cacheName = NAME + '-v' + VERSION;
+  if (evt.request.url.includes('browser-sync') || 
+      evt.request.url.includes('webpack')||
+      evt.request.url.replace(self.location.origin,'') === '/'){
+    return fetch(evt.request);
+  }
+
+  evt.respondWith(
+    caches.match(evt.request, {cacheName})
+    .then(response => {
+      if (response) {
+        return response;
+      }
+
+      const request = evt.request;
+      return fetch(request).then(fetchResponse => {
+        return caches.open(NAME + '-v' + VERSION).then(cache => {
+          return cache.put(request.clone(), fetchResponse.clone());
+        }).then(_ => {
+          return fetchResponse;
+        });
+      }, err => {
+        console.warn(`Unable to fetch ${evt.request.url}.`);
+        console.warn(err.stack);
+        return new Response('Unable to fetch.');
+      });
+    })
+  );
+};

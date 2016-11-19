@@ -21,13 +21,17 @@ const walkStaticFiles = _ => {
       const name = fileStats.name;
       const path = `${root}/${name}`;
 
-      if (ignore.indexOf(name) !== -1||name.endsWith('.map')) {
+      if (ignore.indexOf(name) !== -1 || name.endsWith('.map')) {
         return next();
       }
 
-        root = root.replace(/^\.\/build\/public/, '');
+      root = root.replace(/^\.\/build\/public/, '');
 
+      if (name.endsWith('.json')) {
+        staticFiles.push(`{{${root}/${name}|__addHash}}`);
+      } else {
         staticFiles.push(`${root}/${name}`);
+      }
 
       next();
     });
@@ -37,13 +41,13 @@ const walkStaticFiles = _ => {
 };
 
 
-function buildResourceList(){
+function buildResourceList() {
   return walkStaticFiles()
     .then(resources => {
-  const manifest = `const cacheManifest = ${JSON.stringify(resources, null, 2)}`;
-  fs.writeFile('./build/public/cache-manifest.js', manifest);
-});
- 
+      const manifest = `const cacheManifest = ${JSON.stringify(resources, null, 2)}`;
+      fs.writeFile('./build/public/cache-manifest.js', manifest);
+    });
+
 }
 
 export default buildResourceList;

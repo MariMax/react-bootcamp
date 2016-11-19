@@ -1,7 +1,6 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FastClick from 'fastclick';
 import UniversalRouter from 'universal-router';
 import queryString from 'query-string';
 import { createPath } from 'history/PathUtils';
@@ -9,7 +8,9 @@ import history from './core/history';
 import App from './components/App';
 import configureStore from './store/configureStore';
 import { ErrorReporter, deepForceUpdate } from './core/devUtils';
+import {registerSW} from './core/sw-installer';
 
+registerSW();
 // Global (context) variables that can be easily accessed from any React component
 // https://facebook.github.io/react/docs/context.html
 const context = {
@@ -95,9 +96,6 @@ let onRenderComplete = function initialRenderComplete() {
   };
 };
 
-// Make taps on links and buttons work fast on mobiles
-FastClick.attach(document.body);
-
 const container = document.getElementById('app');
 let appInstance;
 let currentLocation = history.location;
@@ -126,40 +124,40 @@ async function onLocationChange(location) {
       query: queryString.parse(location.search),
     });
 
-    // Prevent multiple page renders during the routing process
-    if (currentLocation.key !== location.key) {
-      return;
-    }
-
-    if (route.redirect) {
-      history.replace(route.redirect);
-      return;
-    }
-
-    appInstance = ReactDOM.render(
-      <App context={context}>{route.component}</App>,
-      container,
-      () => onRenderComplete(route, location),
-    );
-  } catch (error) {
-    console.error(error); // eslint-disable-line no-console
-
-    // Current url has been changed during navigation process, do nothing
-    if (currentLocation.key !== location.key) {
-      return;
-    }
-
-    // Display the error in full-screen for development mode
-    if (process.env.NODE_ENV !== 'production') {
-      appInstance = null;
-      document.title = `Error: ${error.message}`;
-      ReactDOM.render(<ErrorReporter error={error} />, container);
-      return;
-    }
-
-    // Avoid broken navigation in production mode by a full page reload on error
-    window.location.reload();
+  // Prevent multiple page renders during the routing process
+  if (currentLocation.key !== location.key) {
+    return;
   }
+
+  if (route.redirect) {
+    history.replace(route.redirect);
+    return;
+  }
+
+  appInstance = ReactDOM.render(
+    <App context={context}>{route.component}</App>,
+    container,
+    () => onRenderComplete(route, location),
+  );
+} catch (error) {
+  console.error(error); // eslint-disable-line no-console
+
+  // Current url has been changed during navigation process, do nothing
+  if (currentLocation.key !== location.key) {
+    return;
+  }
+
+  // Display the error in full-screen for development mode
+  if (process.env.NODE_ENV !== 'production') {
+    appInstance = null;
+    document.title = `Error: ${error.message}`;
+    ReactDOM.render(<ErrorReporter error={error} />, container);
+    return;
+  }
+
+  // Avoid broken navigation in production mode by a full page reload on error
+  window.location.reload();
+}
 }
 
 // Handle client-side navigation by using HTML5 History API

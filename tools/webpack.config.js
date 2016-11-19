@@ -2,6 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import extend from 'extend';
 import AssetsPlugin from 'assets-webpack-plugin';
+const Visualizer = require('webpack-visualizer-plugin');
 
 const isDebug = !process.argv.includes('--release');
 const isVerbose = process.argv.includes('--verbose');
@@ -251,6 +252,10 @@ const clientConfig = extend(true, {}, config, {
         },
       }),
     ],
+
+    new Visualizer({
+      filename: '../../stats.html'
+    })
   ],
 
   // Choose a developer tool to enhance debugging
