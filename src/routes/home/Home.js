@@ -1,28 +1,20 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {Header} from '../../components/Header';
-import {Search} from '../../components/Search';
+import { Header } from '../../components/Header';
+import { Search } from '../../components/Search';
+import { CheckBox } from '../../components/CheckBox';
+import { ProgressBar } from '../../components/ProgressBar';
 import s from './Home.css';
 
-class Home extends React.Component {
-  // static propTypes = {
-  //   news: PropTypes.arrayOf(PropTypes.shape({
-  //     title: PropTypes.string.isRequired,
-  //     link: PropTypes.string.isRequired,
-  //     contentSnippet: PropTypes.string,
-  //   })).isRequired,
-  // };
-
-  render() {
-    return (
-      <div className={s.root}>
-        <Header>
-          <h1 className={s.title}>Mega App</h1>
-          <Search/>
-        </Header>
-      </div>
-    );
-  }
-}
-
-export default withStyles(s)(Home);
+export const Home = withStyles(s)(_ => {
+  return (
+    <div className={s.root}>
+      <Header>
+        <h1 className={s.title}>To Do List</h1>
+        <CheckBox checked={false} label={`active only`} id={s.title} />
+        <Search />
+      </Header>
+      <ProgressBar done={9} />
+    </div>
+  )
+});

@@ -35,7 +35,7 @@ const renameFiles = (matches) => new Promise((resolve, reject) => {
   try {
     let cwd = path.join(process.cwd(), './build/public');
     for (let match of matches) {
-      const regexp = /\{{(.*)\|/g;
+      const regexp = /^(.*)\?/g;
       const name = regexp.exec(match.match)[1].trim();
       const fileName = path.join(cwd, name);
       match.matchFileName = name;
@@ -81,7 +81,7 @@ export const findHashes = _ => {
       }
 
       let text = fs.readFileSync(path.join(process.cwd(), root, name));
-      const regexp = /(\{\{.*?\|\s?__addHash\s?\}\})/g;
+      const regexp = /['"]+([^'"]*\?__addHash)/g;
       let match = null;
       do {
         match = regexp.exec(text);

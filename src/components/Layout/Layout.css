@@ -17,6 +17,12 @@ body{
   margin: 0;
 }
 
+input[type=checkbox], input[type=radio] {
+  vertical-align: middle;
+  position: relative;
+  bottom: 2px;
+}
+
 .wrapper{
   width: 100vw;
   height: 100vh;

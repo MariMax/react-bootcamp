@@ -1,0 +1,21 @@
+@import '../variables.css';
+
+.wrapper{
+    margin-right: 1rem;  
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;  
+}
+
+.wrapper label{
+    color: var(--graphite);
+    font-size: 1.4rem
+}
+
+.wrapper label:before{
+    
+}
+
+.wrapper input{
+
+}

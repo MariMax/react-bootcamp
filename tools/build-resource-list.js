@@ -28,7 +28,7 @@ const walkStaticFiles = _ => {
       root = root.replace(/^\.\/build\/public/, '');
 
       if (name.endsWith('.json')) {
-        staticFiles.push(`{{${root}/${name}|__addHash}}`);
+        staticFiles.push(`${root}/${name}?__addHash`);
       } else {
         staticFiles.push(`${root}/${name}`);
       }

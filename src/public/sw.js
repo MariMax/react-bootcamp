@@ -1,17 +1,20 @@
-importScripts('{{/cache-manifest.js|__addHash}}');
+importScripts('/cache-manifest.js?__addHash');
 
 const NAME = 'react-bootcamp';
-const VERSION = '{{__version}}';
+let VERSION = '{{__version}}';
+if (VERSION==='{{__version}}'){
+  VERSION = 'max300'+(new Date()).valueOf();
+}
 
 self.oninstall = evt => {
-  const urls = cacheManifest.map(url => {
-    return new Request(url, { credentials: 'include' });
-  });
+  // const urls = cacheManifest.map(url => {
+    // return new Request(url, { credentials: 'include' });
+  // });
 
   evt.waitUntil(
     caches
       .open(NAME + '-v' + VERSION)
-      .then(cache => cache.addAll(urls))
+      .then(cache => cache.addAll(cacheManifest))
   );
 
   self.skipWaiting();
@@ -41,12 +44,12 @@ self.onactivate = _ => {
 self.onfetch = evt => {
   const cacheName = NAME + '-v' + VERSION;
   if (evt.request.url.includes('browser-sync') ||
-    evt.request.url.includes('webpack') ||
-    evt.request.url.replace(self.location.origin, '') === '/') {
-    return fetch(evt.request);
+    evt.request.url.includes('webpack') || 
+    (evt.request.url.replace(self.location.origin, '') === '/' && VERSION.includes('max'))) {
+    return evt.respondWith(fetch(evt.request));
   }
 
-  evt.respondWith(
+  return evt.respondWith(
     caches.match(evt.request, { cacheName })
       .then(response => {
         if (response) {

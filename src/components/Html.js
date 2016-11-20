@@ -33,7 +33,7 @@ class Html extends React.Component {
           <meta name="theme-color" content="#FFFFFF"/>
           <meta name="msapplication-TileImage" content="img/icons/mstile-144x144.png"/>
           <meta name="msapplication-TileColor" content="#FFFFFF"/>
-          <link rel="manifest" href="{{manifest.json|__addHash}}"/>
+          <link rel="manifest" href="manifest.json?__addHash"/>
 
           {style && <style id="css" dangerouslySetInnerHTML={{ __html: style }} />}
         </head>
