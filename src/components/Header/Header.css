@@ -1,0 +1,11 @@
+@import '../variables.css';
+
+.wrapper{
+    background: var(--white);
+    padding: 2.4rem;
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    align-items: center;
+    box-shadow: var(--shadow0); 
+}
