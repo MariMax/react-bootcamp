@@ -7,20 +7,17 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { SplitPage } from '../../components/SplitPage';
 import { TaskTree } from '../../components/TaskTree';
 import { TaskList } from '../../components/TaskList';
-import s from './Home.css';
+import s from './Edit.css';
 
-export const Home = withStyles(s)(_ => {
+export const Edit = withStyles(s)(_ => {
   return (
     <div className={s.root}>
       <Header>
         <h1 className={s.title}>To Do List</h1>
-        <CheckBox checked={false} label={`active only`} id={s.title} />
-        <Search />
       </Header>
-      <ProgressBar done={9} />
       <SplitPage>
-        <TaskTree add={true} />
-        <TaskList />
+        <TaskTree />
+        <div>task details here</div>
       </SplitPage>
     </div>
   )

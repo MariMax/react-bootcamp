@@ -4,9 +4,12 @@ import { AddItem } from '../AddItem';
 import { TreeItem } from '../TreeItem';
 import s from './TaskTree.css';
 
-import {treeData} from './treeData'; 
+import { treeData } from './treeData';
 
 class TaskTreeComponent extends React.Component {
+  static propTypes = {
+    add: PropTypes.bool,
+  };
 
   constructor(props) {
     super(props);
@@ -30,9 +33,9 @@ class TaskTreeComponent extends React.Component {
     const items = this.buildList(this.items, 0);
     return (
       <section className={s.wrapper}>
-        <div className={s['add-item']}>
+        {this.props.add && <div className={s['add-item']}>
           <AddItem label={'task title'} buttonText={'save'} id={s.wrapper} />
-        </div>
+        </div>}
         <div className={s.tree}>
           {items}
         </div>
