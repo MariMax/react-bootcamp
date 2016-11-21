@@ -1,0 +1,6 @@
+{
+  "name": "TreeItem",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TreeItem.js"
+}

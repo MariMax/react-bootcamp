@@ -1,5 +1,11 @@
 @import '../../components/variables.css';
 
+.root{
+  flex: 1;
+  display: flex;
+  flex-flow: inherit;
+}
+
 .root .title{
   margin-right: auto;
   white-space: nowrap;

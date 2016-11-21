@@ -1,0 +1,6 @@
+{
+  "name": "TaskTree",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./TaskTree.js"
+}
