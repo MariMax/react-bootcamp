@@ -31,7 +31,7 @@
 
 .selected button{
   background-color: var(--lime-green);
-  color: var(--whire);
+  color: var(--white);
 }
 
 .deep{
