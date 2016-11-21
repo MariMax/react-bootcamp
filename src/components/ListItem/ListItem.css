@@ -7,7 +7,6 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  cursor: pointer;
 }
 
 .wrapper button{
@@ -19,7 +18,7 @@
   margin-right: 1rem;
 }
 
-.title{
+.wrapper label{
   font-size: 1.4rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -28,20 +27,7 @@
   white-space: nowrap;
 }
 
-.selected{
-  background-color: var(--sharp-blue);
-}
-
-.selected button{
-  background-color: var(--lime-green);
-  color: var(--white);
-}
-
-.deep{
-  border-radius: 50%;
-  background-color: var(--lime-green);
-  width: 1rem;
-  height: 1rem;
+.wrapper input{
   margin-right: .5rem;
   flex-shrink: 0;
 }
