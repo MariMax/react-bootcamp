@@ -1,17 +1,40 @@
 @import '../variables.css';
 
 .wrapper{
-    white-space: nowrap;
-    text-overflow: ellipsis;  
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    padding: 1rem;
-    box-shadow: var(--shadow2);
+  flex:1;
+}
+
+.wrapper form{
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-shadow: var(--shadow2);
+  margin-top:1rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .wrapper button{
   padding: 1rem;
+}
+
+.wrapper input[type=checkbox]{
+  margin-right: 1rem;
+}
+
+.wrapper input[type=checkbox] ~ label{
+  text-transform: uppercase;
+  font-size: 400;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-actions button{
+  margin: 1rem 0 1rem 1rem;
 }
 
 .form-control {
@@ -21,11 +44,12 @@
   position: relative;
   max-width: 40rem;
   margin-top: 1.7rem;
-  margin-right: 1rem
-
+  margin-right: 1rem;
+  margin-bottom: 1rem;
 }
 
-.form-control input{
+.form-control input,
+.form-control textarea{
   outline: none;
   z-index: 1;
   position: relative;
@@ -36,6 +60,11 @@
   color: var(--graphite);
   font-size: 2.4rem;
   font-weight: 400;
+}
+
+.form-control textarea {
+  resize: none;
+  height: 10rem;
 }
 
 .form-control > input:focus ~ label,

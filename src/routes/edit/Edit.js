@@ -6,7 +6,7 @@ import { CheckBox } from '../../components/CheckBox';
 import { ProgressBar } from '../../components/ProgressBar';
 import { SplitPage } from '../../components/SplitPage';
 import { TaskTree } from '../../components/TaskTree';
-import { TaskList } from '../../components/TaskList';
+import { TaskDetails } from '../../components/TaskDetails';
 import s from './Edit.css';
 
 export const Edit = withStyles(s)(_ => {
@@ -17,7 +17,7 @@ export const Edit = withStyles(s)(_ => {
       </Header>
       <SplitPage>
         <TaskTree />
-        <div>task details here</div>
+        <TaskDetails />
       </SplitPage>
     </div>
   )
