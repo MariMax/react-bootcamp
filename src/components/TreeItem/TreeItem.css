@@ -15,7 +15,19 @@
 }
 
 .edit{
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.remove{
   margin-left: auto;
+}
+
+.add{
+  margin-left: 1rem;
+}
+
+.expand{
   margin-right: 1rem;
 }
 

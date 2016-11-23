@@ -40,7 +40,7 @@ class Html extends React.Component {
         <body>
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" style={{position: 'absolute', width: 0, height: 0}}>
             <symbol id="icon-plus" viewBox="0 0 20 20">
-              <path d="M16 10c0 0.553-0.048 1-0.601 1h-4.399v4.399c0 0.552-0.447 0.601-1 0.601s-1-0.049-1-0.601v-4.399h-4.399c-0.552 0-0.601-0.447-0.601-1s0.049-1 0.601-1h4.399v-4.399c0-0.553 0.447-0.601 1-0.601s1 0.048 1 0.601v4.399h4.399c0.553 0 0.601 0.447 0.601 1z"></path>
+              <path fill="currentColor" d="M16 10c0 0.553-0.048 1-0.601 1h-4.399v4.399c0 0.552-0.447 0.601-1 0.601s-1-0.049-1-0.601v-4.399h-4.399c-0.552 0-0.601-0.447-0.601-1s0.049-1 0.601-1h4.399v-4.399c0-0.553 0.447-0.601 1-0.601s1 0.048 1 0.601v4.399h4.399c0.553 0 0.601 0.447 0.601 1z"></path>
             </symbol>
             <symbol id="icon-chevron-left" viewBox="0 0 20 20">
               <path fill="currentColor" d="M13.891 17.418c0.268 0.272 0.268 0.709 0 0.979s-0.701 0.271-0.969 0l-7.83-7.908c-0.268-0.27-0.268-0.707 0-0.979l7.83-7.908c0.268-0.27 0.701-0.27 0.969 0s0.268 0.709 0 0.979l-7.141 7.419 7.141 7.418z"></path>
@@ -62,6 +62,12 @@ class Html extends React.Component {
             </symbol>
             <symbol id="icon-close" viewBox="0 0 24 24">
               <path fill="currentColor" d="M18.984 6.422l-5.578 5.578 5.578 5.578-1.406 1.406-5.578-5.578-5.578 5.578-1.406-1.406 5.578-5.578-5.578-5.578 1.406-1.406 5.578 5.578 5.578-5.578z"></path>
+            </symbol>
+            <symbol id="icon-collapse" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12 8.016l6 6-1.406 1.406-4.594-4.594-4.594 4.594-1.406-1.406z"></path>
+            </symbol>
+            <symbol id="icon-expand" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M16.594 8.578l1.406 1.406-6 6-6-6 1.406-1.406 4.594 4.594z"></path>
             </symbol>
           </svg>
 
