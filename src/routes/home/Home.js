@@ -5,7 +5,7 @@ import { Search } from '../../components/Search';
 import { CheckBox } from '../../components/CheckBox';
 import { ProgressBar } from '../../components/ProgressBar';
 import { SplitPage } from '../../components/SplitPage';
-import { TaskTree } from '../../components/TaskTree';
+import { CategoryTree } from '../../components/CategoryTree';
 import { TaskList } from '../../components/TaskList';
 import s from './Home.css';
 
@@ -19,7 +19,7 @@ export const Home = withStyles(s)(_ => {
       </Header>
       <ProgressBar done={9} />
       <SplitPage>
-        <TaskTree add={true} />
+        <CategoryTree add={true} />
         <TaskList />
       </SplitPage>
     </div>

@@ -18,7 +18,7 @@ class TaskListComponent extends React.Component {
     return (
       <section className={s.wrapper}>
         <div className={s['add-item']}>
-          <AddItem label={'task title'} buttonText={'save'} id={s.wrapper} />
+          <AddItem label={'Task title'} buttonText={'save'} id={s.wrapper} />
         </div>
         <div className={s.list}>
           {this.items.map(i => {

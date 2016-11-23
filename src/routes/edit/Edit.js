@@ -5,7 +5,7 @@ import { Search } from '../../components/Search';
 import { CheckBox } from '../../components/CheckBox';
 import { ProgressBar } from '../../components/ProgressBar';
 import { SplitPage } from '../../components/SplitPage';
-import { TaskTree } from '../../components/TaskTree';
+import { CategoryTree } from '../../components/CategoryTree';
 import { TaskDetails } from '../../components/TaskDetails';
 import s from './Edit.css';
 
@@ -16,7 +16,7 @@ export const Edit = withStyles(s)(_ => {
         <h1 className={s.title}>To Do List</h1>
       </Header>
       <SplitPage>
-        <TaskTree />
+        <CategoryTree />
         <TaskDetails />
       </SplitPage>
     </div>

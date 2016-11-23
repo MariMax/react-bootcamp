@@ -75,7 +75,7 @@
 
 .module label{
   box-sizing: border-box;
-  bottom: 0;
+  bottom: .3rem;
   font-size: 1.6rem;
   font-weight: 300;
   color: var(--graphite);
@@ -85,7 +85,6 @@
   overflow: hidden;
   white-space: nowrap;
   position: absolute;
-  top: 0;
   text-transform: none;
   visibility: hidden;
   padding-left: 2.4rem;

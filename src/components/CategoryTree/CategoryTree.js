@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { AddItem } from '../AddItem';
 import { TreeItem } from '../TreeItem';
-import s from './TaskTree.css';
+import s from './CategoryTree.css';
 
 import { treeData } from './treeData';
 
-class TaskTreeComponent extends React.Component {
+class CategoryTreeComponent extends React.Component {
   static propTypes = {
     add: PropTypes.bool,
   };
@@ -34,7 +34,7 @@ class TaskTreeComponent extends React.Component {
     return (
       <section className={s.wrapper}>
         {this.props.add && <div className={s['add-item']}>
-          <AddItem label={'task title'} buttonText={'save'} id={s.wrapper} />
+          <AddItem label={'Category title'} buttonText={'save'} id={s.wrapper} />
         </div>}
         <div className={s.tree}>
           {items}
@@ -44,4 +44,4 @@ class TaskTreeComponent extends React.Component {
   }
 }
 
-export const TaskTree = withStyles(s)(TaskTreeComponent);
+export const CategoryTree = withStyles(s)(CategoryTreeComponent);

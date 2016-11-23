@@ -22,7 +22,6 @@
   max-width: 40rem;
   margin-top: 1.7rem;
   margin-right: 1rem
-
 }
 
 .form-control input{
@@ -39,10 +38,8 @@
 }
 
 .form-control > input:focus ~ label,
-.form-control > input.ng-valid ~ label,
 .form-control > input.not-empty ~ label,
-.form-control > textarea:focus ~ label,
-.form-control > textarea.ng-valid ~ label {
+.form-control > textarea:focus ~ label {
   color: var(--sharp-blue);
   transform: translate(-12%, -50%) scale(0.75);
 }
@@ -52,10 +49,6 @@
 .form-control > textarea:focus ~ .bar:before,
 .form-control > textarea:focus ~ .bar:after {
   width: 50%;
-}
-
-.form-control > label:first-letter {
-  text-transform: capitalize;
 }
 
 .form-control > label {

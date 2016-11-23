@@ -24,6 +24,7 @@
   transition: all .5s cubic-bezier(0.645, 0.045, 0.355, 1);
   margin: 1rem 0;
   box-shadow: var(--shadow1);
+  overflow: hidden;
 }
 
 .devider:hover{
@@ -42,7 +43,7 @@
 .right-side{}
 
 .left-side{
-  transform: translateX(calc(2rem - 100vw));
+  transform: translateX(-100vw) translateX(2rem);
 }
 
 .active{
@@ -66,5 +67,11 @@
   }
   .wrapper section{
     flex-basis: calc(50% - 2rem);
+  }
+  .right,
+  .right.active,
+  .left,
+  .left.active{
+    transform: translateX(0)
   }
 }

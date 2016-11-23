@@ -83,10 +83,6 @@
   width: 50%;
 }
 
-.form-control > label:first-letter {
-  text-transform: capitalize;
-}
-
 .form-control > label {
   font-weight: 700;
 }
