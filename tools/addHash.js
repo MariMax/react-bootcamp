@@ -79,13 +79,14 @@ export const findHashes = _ => {
       if (name.endsWith('.map')) {
         return next();
       }
-
-      let text = fs.readFileSync(path.join(process.cwd(), root, name));
+      let fileName = path.join(process.cwd(),root, name);
+      console.log(process.cwd(), root, name);
+      let text = fs.readFileSync(fileName);
       const regexp = /['"]+([^'"]*\?__addHash)/g;
       let match = null;
       do {
         match = regexp.exec(text);
-        matches = [...matches, { match: match && match[1], filePath: path.join(process.cwd(), root, name), fileName: name }].filter(i => i.match)
+        matches = [...matches, { match: match && match[1], filePath: fileName, fileName: name }].filter(i => i.match)
       } while (match);
 
       next();
