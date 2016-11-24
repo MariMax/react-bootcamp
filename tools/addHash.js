@@ -50,7 +50,7 @@ const renameFiles = (matches) => new Promise((resolve, reject) => {
           .digest('hex');
 
         const hashedName = name.replace(/\.(.*)$/, `.${hash}.$1`);
-        const newFileName = fileName.replace(/\.(.*)$/, `.${hash}.$1`);
+        const newFileName = fileName.replace(name, hashedName);
         renameTable.push({ fileName, newFileName, hashedName, name });
         fs.writeFileSync(newFileName, text);
       } else {
