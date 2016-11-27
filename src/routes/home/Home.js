@@ -19,7 +19,7 @@ export const Home = withStyles(s)(({storeManager}) => {
       </Header>
       <ProgressBar done={9} />
       <SplitPage>
-        <CategoryTree add={true} storeManager={storeManager}/>
+        <CategoryTree add={true}/>
       </SplitPage>
     </div>
   )

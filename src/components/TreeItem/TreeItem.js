@@ -3,6 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './TreeItem.css';
 import { Link } from '../Link';
 import { expandCategory, collapseCategory } from '../CategoryTree/CategoryActions';
+import { connect } from 'react-redux';
 
 class TreeItemComponent extends React.Component {
   static propTypes = {
@@ -12,25 +13,12 @@ class TreeItemComponent extends React.Component {
       children: PropTypes.array,
       tasks: PropTypes.array,
     }),
-    store: PropTypes.shape({
-      getState: PropTypes.func,
-      subscribe: PropTypes.func,
-      dispatch: PropTypes.func,
-    }),
     level: PropTypes.number,
-    reducerName: PropTypes.string
+    reducerName: PropTypes.string,
   };
 
   constructor(props) {
     super(props);
-    const {store, reducerName, item} = props;
-    const state = store.getState();
-    this.state = {
-      expanded: state[reducerName].expanded.find(i => i === item.id),
-      listView: true,
-      selected: state[reducerName].selected === item.id,
-      edit: false
-    };
 
     this.expandIcon = `<svg width="20" height="20"><use xlink:href="#icon-expand"/></svg>`;
     this.collapseIcon = `<svg width="20" height="20"><use xlink:href="#icon-collapse"/></svg>`;
@@ -42,26 +30,11 @@ class TreeItemComponent extends React.Component {
     this.remove = this.remove.bind(this);
   }
 
-  componentDidMount() {
-    const {reducerName, item, store } = this.props;
-    this.s = store.subscribe(_ => {
-      const state = store.getState();
-      this.setState({
-        selected: state[reducerName].selected === item.id,
-        expanded: state[reducerName].expanded.find(i => i === item.id)
-      })
-    })
-  }
-
-  componentWillUnmount() {
-    return this.s && this.s();
-  }
-
   expandHandle(event) {
     event.preventDefault();
     event.stopPropagation();
-    const {item, store} = this.props;
-    store.dispatch(this.state.expanded ? collapseCategory(item.id) : expandCategory(item.id));
+    const {item, collapseCategory, expandCategory, expanded} = this.props;
+    return expanded ? collapseCategory(item.id) : expandCategory(item.id);
   }
 
   addNested(event) {
@@ -84,8 +57,8 @@ class TreeItemComponent extends React.Component {
 
   render() {
     return (
-      <Link to={`/Category/${this.props.item.id}`} id={this.props.item.id} className={`${s.wrapper} ${this.state.selected ? s.selected : ''}`}>
-        <button onClick={this.expandHandle} className={s.expand} dangerouslySetInnerHTML={{ __html: this.state.expanded ? this.collapseIcon : this.expandIcon }} />
+      <Link to={`/Category/${this.props.item.id}`} id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
+        <button onClick={this.expandHandle} className={s.expand} dangerouslySetInnerHTML={{ __html: this.props.expanded ? this.collapseIcon : this.expandIcon }} />
         {[...(new Array(this.props.level)).keys()].map((i, index) => <div key={index} className={s.deep}></div>)}
         <span className={s.title}>{this.props.item.title}</span>
         <button onClick={this.edit} className={s.edit}>edit</button>
@@ -96,4 +69,14 @@ class TreeItemComponent extends React.Component {
   }
 }
 
-export const TreeItem = withStyles(s)(TreeItemComponent);
+const mapState = (state, ownProps) => ({
+  expanded: state[ownProps.reducerName].expanded.find(i => i === ownProps.item.id),
+  selected: state[ownProps.reducerName].selected === ownProps.item.id,
+});
+
+const mapDispatch = {
+  expandCategory,
+  collapseCategory
+};
+
+export const TreeItem = connect(mapState, mapDispatch)(withStyles(s)(TreeItemComponent));

@@ -16,6 +16,7 @@ import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { getStoreManager } from './store/storeManager';
 import { setRuntimeVariable } from './actions/runtime';
 import { port } from './config';
+import { Provider } from 'react-redux';
 
 import { treeData } from './components/CategoryTree/treeData';
 import { reducerName, categoryReducer } from './components/CategoryTree/CategoryReducer';
@@ -42,50 +43,50 @@ app.use(bodyParser.json());
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
-  try {
-    const storeManager = getStoreManager({
-      user: req.user || null
-    }, {
-        cookie: req.headers.cookie,
-      });
+    try {
+        const storeManager = getStoreManager({
+            user: req.user || null
+        }, {
+                cookie: req.headers.cookie,
+            });
 
-    storeManager.addReducer(reducerName, categoryReducer);
-    storeManager.dispatch(setData(treeData));
+        storeManager.addReducer(reducerName, categoryReducer);
+        storeManager.dispatch(setData(treeData));
 
-    storeManager.dispatch(setRuntimeVariable({
-      name: 'initialNow',
-      value: Date.now(),
-    }));
+        storeManager.dispatch(setRuntimeVariable({
+            name: 'initialNow',
+            value: Date.now(),
+        }));
 
-    const css = new Set();
+        const css = new Set();
 
-    // Global (context) variables that can be easily accessed from any React component
-    // https://facebook.github.io/react/docs/context.html
-    const context = {
-      // Enables critical path CSS rendering
-      // https://github.com/kriasoft/isomorphic-style-loader
-      insertCss: (...styles) => {
-        // eslint-disable-next-line no-underscore-dangle
-        styles.forEach(style => css.add(style._getCss()));
-      },
-      // Initialize a new Redux store
-      // http://redux.js.org/docs/basics/UsageWithReact.html
-      storeManager,
-    };
+        // Global (context) variables that can be easily accessed from any React component
+        // https://facebook.github.io/react/docs/context.html
+        const context = {
+            // Enables critical path CSS rendering
+            // https://github.com/kriasoft/isomorphic-style-loader
+            insertCss: (...styles) => {
+                // eslint-disable-next-line no-underscore-dangle
+                styles.forEach(style => css.add(style._getCss()));
+            },
+            // Initialize a new Redux store
+            // http://redux.js.org/docs/basics/UsageWithReact.html
+            storeManager,
+        };
 
-    const route = await UniversalRouter.resolve(routes, {
+        const route = await UniversalRouter.resolve(routes, {
       ...context,
-      path: req.path,
-      query: req.query,
+            path: req.path,
+            query: req.query,
     });
 
 if (route.redirect) {
-  res.redirect(route.status || 302, route.redirect);
-  return;
+    res.redirect(route.status || 302, route.redirect);
+    return;
 }
 
 const data = { ...route };
-data.children = ReactDOM.renderToString(<App context={context}>{route.component}</App>);
+data.children = ReactDOM.renderToString(<Provider store={context.storeManager}><App context={context}>{route.component}</App></Provider>);
 data.style = [...css].join('');
 data.script = assets.main.js;
 data.state = context.storeManager.getState();
@@ -95,7 +96,7 @@ const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
 res.status(route.status || 200);
 res.send(`<!doctype html>${html}`);
   } catch (err) {
-  next(err);
+    next(err);
 }
 });
 
@@ -107,18 +108,18 @@ pe.skipNodeFiles();
 pe.skipPackage('express');
 
 app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  console.log(pe.render(err)); // eslint-disable-line no-console
-  const html = ReactDOM.renderToStaticMarkup(
-    <Html
-      title="Internal Server Error"
-      description={err.message}
-      style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
-      >
-      {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
-    </Html>,
-  );
-  res.status(err.status || 500);
-  res.send(`<!doctype html>${html}`);
+    console.log(pe.render(err)); // eslint-disable-line no-console
+    const html = ReactDOM.renderToStaticMarkup(
+        <Html
+            title="Internal Server Error"
+            description={err.message}
+            style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
+            >
+            {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
+        </Html>,
+    );
+    res.status(err.status || 500);
+    res.send(`<!doctype html>${html}`);
 });
 
 //
@@ -127,7 +128,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 /* eslint-disable no-console */
 
 app.listen(port, () => {
-  console.log(`The server is running at http://localhost:${port}/`);
+    console.log(`The server is running at http://localhost:${port}/`);
 });
 
 /* eslint-enable no-console */

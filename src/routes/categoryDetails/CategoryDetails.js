@@ -19,7 +19,7 @@ export const CategoryDetails = withStyles(s)(({storeManager}) => {
       </Header>
       <ProgressBar done={9} />
       <SplitPage>
-        <CategoryTree add={true} storeManager={storeManager}/>
+        <CategoryTree add={true}/>
         <TaskList></TaskList>
       </SplitPage>
     </div>

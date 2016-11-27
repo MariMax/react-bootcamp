@@ -9,11 +9,21 @@ const globalReducer = { name: 'globalStorage', reducer: globalStorageReducer };
 const userReducer = { name: 'user', reducer: user };
 const runtimeReducer = { name: 'runtime', reducer: runtime };
 
+let store = null;
+
 class StoreService {
     constructor(initialState, helpers) {
         this.reducers = [globalReducer, userReducer, runtimeReducer];
         const combination = this._translateToObject();
-        this.store = configureStore(combineReducers(combination), initialState, helpers)
+        store = configureStore(combineReducers(combination), initialState, helpers);
+
+        this._translateToObject.bind(this);
+        this._combineReducers.bind(this);
+        this.addReducer.bind(this);
+        this.saveGlobalItem.bind(this);
+        this.subscribe.bind(this);
+        this.getState.bind(this);
+        this.dispatch.bind(this);
     }
 
     _translateToObject(){
@@ -25,7 +35,7 @@ class StoreService {
 
     _combineReducers() {
         const combination = this._translateToObject();
-        this.store.replaceReducer(combineReducers(combination));
+        store.replaceReducer(combineReducers(combination));
     }
 
     addReducer(name, reducer) {
@@ -34,26 +44,22 @@ class StoreService {
     }
 
     saveGlobalItem(item, identityField) {
-        this.store.dispatch({
+        store.dispatch({
             type: SAVE_GLOBAL_ITEM,
             payload: { idField: identityField, item }
         })
     }
 
-    connect() {
-        return this.store.connect(...arguments);
-    }
-
     subscribe() {
-        return this.store.subscribe(...arguments);
+        return store.subscribe(...arguments);
     }
 
     getState() {
-        return this.store.getState();
+        return store.getState();
     }
 
     dispatch(action) {
-        this.store.dispatch(action);
+        return store.dispatch(action);
     }
 }
 

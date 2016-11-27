@@ -9,6 +9,7 @@ import App from './components/App';
 import { getStoreManager } from './store/storeManager';
 import { ErrorReporter, deepForceUpdate } from './core/devUtils';
 import { registerSW } from './core/sw-installer';
+import { Provider } from 'react-redux';
 
 registerSW();
 // Global (context) variables that can be easily accessed from any React component
@@ -135,7 +136,9 @@ async function onLocationChange(location) {
   }
 
   appInstance = ReactDOM.render(
-    <App context={context}>{route.component}</App>,
+    <Provider store={context.storeManager}>
+      <App context={context}>{route.component}</App>
+    </Provider>,
     container,
     () => onRenderComplete(route, location),
   );
