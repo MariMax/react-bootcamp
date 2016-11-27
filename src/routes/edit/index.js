@@ -5,13 +5,13 @@ import Layout from '../../components/Layout';
 
 export default {
 
-  path: '/edit',
+  path: '/edit/:id',
 
-  async action() {
+  async action({params}) {
 
     return {
       title: 'To Do List',
-      component: <Layout><Edit /></Layout>,
+      component: <Layout><Edit taskId={params.id}/></Layout>,
     };
   },
 

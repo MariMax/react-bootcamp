@@ -9,7 +9,7 @@ function isModifiedEvent(event) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
-class Link extends React.Component {
+export class Link extends React.Component {
   static propTypes = {
     to: PropTypes.string.isRequired,
     children: PropTypes.node,
@@ -38,5 +38,3 @@ class Link extends React.Component {
     return <a href={to} {...props} onClick={this.handleClick}>{children}</a>;
   }
 }
-
-export default Link;

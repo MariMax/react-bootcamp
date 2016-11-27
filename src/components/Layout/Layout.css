@@ -10,6 +10,7 @@ html {
   font-weight: 100;
   font-size: 10px;
   font-family: var(--font-family-base);
+  color: var(--graphite);
 }
 
 body{
@@ -45,6 +46,12 @@ button:hover, .module button:focus {
 
 button:active {
   box-shadow: var(--shadow3);
+}
+
+a,a:hover, a:active, a:visited, a:focus{
+  text-decoration: none;
+  color: var(--graphite);
+  font-weight: 400;
 }
 
 .wrapper{

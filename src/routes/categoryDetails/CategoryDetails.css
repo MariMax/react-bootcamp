@@ -1,0 +1,17 @@
+@import '../../components/variables.css';
+
+.root{
+  flex: 1;
+  display: flex;
+  flex-flow: inherit;
+  overflow: hidden;
+}
+
+.root .title{
+  margin-right: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--graphite);
+  font-family: var(--font-family-headers);
+}

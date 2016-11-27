@@ -6,9 +6,9 @@ import queryString from 'query-string';
 import { createPath } from 'history/PathUtils';
 import history from './core/history';
 import App from './components/App';
-import configureStore from './store/configureStore';
+import { getStoreManager } from './store/storeManager';
 import { ErrorReporter, deepForceUpdate } from './core/devUtils';
-import {registerSW} from './core/sw-installer';
+import { registerSW } from './core/sw-installer';
 
 registerSW();
 // Global (context) variables that can be easily accessed from any React component
@@ -23,7 +23,7 @@ const context = {
   },
   // Initialize a new Redux store
   // http://redux.js.org/docs/basics/UsageWithReact.html
-  store: configureStore(window.APP_STATE, { history }),
+  storeManager: getStoreManager(window.APP_STATE, { history }),
 };
 
 function updateTag(tagName, keyName, keyValue, attrName, attrValue) {

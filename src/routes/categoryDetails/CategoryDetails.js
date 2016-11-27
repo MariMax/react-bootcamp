@@ -6,18 +6,21 @@ import { CheckBox } from '../../components/CheckBox';
 import { ProgressBar } from '../../components/ProgressBar';
 import { SplitPage } from '../../components/SplitPage';
 import { CategoryTree } from '../../components/CategoryTree';
-import { TaskDetails } from '../../components/TaskDetails';
-import s from './Edit.css';
+import { TaskList } from '../../components/TaskList';
+import s from './CategoryDetails.css';
 
-export const Edit = withStyles(s)(({taskId, storeManager}) => {
+export const CategoryDetails = withStyles(s)(({storeManager}) => {
   return (
     <div className={s.root}>
       <Header>
-        <h1 className={s.title}>Task Details</h1>
+        <h1 className={s.title}>Category Datails</h1>
+        <CheckBox checked={false} label={`active only`} id={s.title} />
+        <Search />
       </Header>
+      <ProgressBar done={9} />
       <SplitPage>
-        <CategoryTree storeManager={storeManager}/>
-        <TaskDetails id={taskId}/>
+        <CategoryTree add={true} storeManager={storeManager}/>
+        <TaskList></TaskList>
       </SplitPage>
     </div>
   )

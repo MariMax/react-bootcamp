@@ -1,13 +1,9 @@
-/* eslint-disable import/prefer-default-export */
-
 import { SET_RUNTIME_VARIABLE } from '../constants';
 
-export function setRuntimeVariable({ name, value }) {
-  return {
+export const setRuntimeVariable = ({ name, value }) => ({
     type: SET_RUNTIME_VARIABLE,
     payload: {
       name,
       value,
     },
-  };
-}
+  })

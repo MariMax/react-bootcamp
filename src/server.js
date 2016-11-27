@@ -13,9 +13,13 @@ import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
-import configureStore from './store/configureStore';
+import { getStoreManager } from './store/storeManager';
 import { setRuntimeVariable } from './actions/runtime';
 import { port } from './config';
+
+import { treeData } from './components/CategoryTree/treeData';
+import { reducerName, categoryReducer } from './components/CategoryTree/CategoryReducer';
+import { setData } from './components/CategoryTree/CategoryActions';
 
 const app = express();
 
@@ -39,13 +43,16 @@ app.use(bodyParser.json());
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
   try {
-    const store = configureStore({
-      user: req.user || null,
+    const storeManager = getStoreManager({
+      user: req.user || null
     }, {
-      cookie: req.headers.cookie,
-    });
+        cookie: req.headers.cookie,
+      });
 
-    store.dispatch(setRuntimeVariable({
+    storeManager.addReducer(reducerName, categoryReducer);
+    storeManager.dispatch(setData(treeData));
+
+    storeManager.dispatch(setRuntimeVariable({
       name: 'initialNow',
       value: Date.now(),
     }));
@@ -63,7 +70,7 @@ app.get('*', async (req, res, next) => {
       },
       // Initialize a new Redux store
       // http://redux.js.org/docs/basics/UsageWithReact.html
-      store,
+      storeManager,
     };
 
     const route = await UniversalRouter.resolve(routes, {
@@ -72,24 +79,24 @@ app.get('*', async (req, res, next) => {
       query: req.query,
     });
 
-    if (route.redirect) {
-      res.redirect(route.status || 302, route.redirect);
-      return;
-    }
+if (route.redirect) {
+  res.redirect(route.status || 302, route.redirect);
+  return;
+}
 
-    const data = { ...route };
-    data.children = ReactDOM.renderToString(<App context={context}>{route.component}</App>);
-    data.style = [...css].join('');
-    data.script = assets.main.js;
-    data.state = context.store.getState();
-    data.chunk = assets[route.chunk] && assets[route.chunk].js;
-    const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
+const data = { ...route };
+data.children = ReactDOM.renderToString(<App context={context}>{route.component}</App>);
+data.style = [...css].join('');
+data.script = assets.main.js;
+data.state = context.storeManager.getState();
+data.chunk = assets[route.chunk] && assets[route.chunk].js;
+const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
 
-    res.status(route.status || 200);
-    res.send(`<!doctype html>${html}`);
+res.status(route.status || 200);
+res.send(`<!doctype html>${html}`);
   } catch (err) {
-    next(err);
-  }
+  next(err);
+}
 });
 
 //
@@ -106,7 +113,7 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
       title="Internal Server Error"
       description={err.message}
       style={errorPageStyle._getCss()} // eslint-disable-line no-underscore-dangle
-    >
+      >
       {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
     </Html>,
   );
@@ -119,8 +126,8 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 // -----------------------------------------------------------------------------
 /* eslint-disable no-console */
 
-  app.listen(port, () => {
-    console.log(`The server is running at http://localhost:${port}/`);
-  });
+app.listen(port, () => {
+  console.log(`The server is running at http://localhost:${port}/`);
+});
 
 /* eslint-enable no-console */

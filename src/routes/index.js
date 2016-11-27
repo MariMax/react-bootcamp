@@ -9,6 +9,7 @@ export default {
   children: [
     require('./home').default,
     require('./edit').default,
+    require('./categoryDetails').default,
     // require('./login').default,
     // require('./admin').default,
 

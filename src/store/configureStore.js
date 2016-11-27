@@ -1,10 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
 import createHelpers from './createHelpers';
 import createLogger from './logger';
 
-export default function configureStore(initialState, helpersConfig) {
+export const configureStore = (reducers, initialState, helpersConfig) => {
   const helpers = createHelpers(helpersConfig);
   const middleware = [thunk.withExtraArgument(helpers)];
 
@@ -28,15 +27,15 @@ export default function configureStore(initialState, helpersConfig) {
   }
 
   // See https://github.com/rackt/redux/releases/tag/v3.1.0
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store = createStore(reducers, initialState, enhancer);
 
-  // Hot reload reducers (requires Webpack or Browserify HMR to be enabled)
-  if (__DEV__ && module.hot) {
-    module.hot.accept('../reducers', () =>
-      // eslint-disable-next-line global-require
-      store.replaceReducer(require('../reducers').default),
-    );
-  }
+  // // Hot reload reducers (requires Webpack or Browserify HMR to be enabled)
+  // if (__DEV__ && module.hot) {
+  //   module.hot.accept('../reducers', () =>
+  //     // eslint-disable-next-line global-require
+  //     store.replaceReducer(require('../reducers').default),
+  //   );
+  // }
 
   return store;
 }

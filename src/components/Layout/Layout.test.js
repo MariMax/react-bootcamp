@@ -15,10 +15,10 @@ const initialState = {};
 
 describe('Layout', () => {
   it('renders children correctly', () => {
-    const store = mockStore(initialState);
+    const storeManager = mockStore(initialState);
 
     const wrapper = render(
-      <App context={{ insertCss: () => {}, store }}>
+      <App context={{ insertCss: () => {}, storeManager }}>
         <Layout>
           <div className="child" />
         </Layout>

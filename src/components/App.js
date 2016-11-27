@@ -2,7 +2,7 @@ import React, { Children, PropTypes } from 'react';
 
 const ContextType = {
   insertCss: PropTypes.func.isRequired,
-  store: PropTypes.shape({
+  storeManager: PropTypes.shape({
     subscribe: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     getState: PropTypes.func.isRequired,

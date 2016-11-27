@@ -9,7 +9,7 @@ import { CategoryTree } from '../../components/CategoryTree';
 import { TaskList } from '../../components/TaskList';
 import s from './Home.css';
 
-export const Home = withStyles(s)(_ => {
+export const Home = withStyles(s)(({storeManager}) => {
   return (
     <div className={s.root}>
       <Header>
@@ -19,8 +19,7 @@ export const Home = withStyles(s)(_ => {
       </Header>
       <ProgressBar done={9} />
       <SplitPage>
-        <CategoryTree add={true} />
-        <TaskList />
+        <CategoryTree add={true} storeManager={storeManager}/>
       </SplitPage>
     </div>
   )
