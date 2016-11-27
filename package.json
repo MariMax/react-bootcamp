@@ -181,5 +181,5 @@
     "start": "babel-node tools/run start",
     "bump-version": "npm version patch"
   },
-  "version": "0.0.12"
+  "version": "0.0.13"
 }
