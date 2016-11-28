@@ -25,7 +25,7 @@ async function deployToGitHubPages() {
 
   // Build the project in RELEASE mode which
   // generates optimized and minimized bundles
-  process.argv.push('--static', '--release');
+  process.argv.push('--static', 'release');
   await run(build);
 
   // Push the contents of the build folder to the remote server via Git

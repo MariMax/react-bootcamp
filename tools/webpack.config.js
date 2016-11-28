@@ -4,7 +4,7 @@ import extend from 'extend';
 import AssetsPlugin from 'assets-webpack-plugin';
 const Visualizer = require('webpack-visualizer-plugin');
 
-const isDebug = !process.argv.includes('--release');
+const isDebug = !process.argv.includes('release');
 const isVerbose = process.argv.includes('--verbose');
 
 //
