@@ -16,7 +16,7 @@ export const Edit = withStyles(s)(({taskId, storeManager}) => {
         <h1 className={s.title}>Task Details</h1>
       </Header>
       <SplitPage>
-        <CategoryTree/>
+        <CategoryTree storeManager={storeManager}/>
         <TaskDetails id={taskId}/>
       </SplitPage>
     </div>

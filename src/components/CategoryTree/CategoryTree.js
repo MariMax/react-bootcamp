@@ -5,7 +5,7 @@ import { AddItem } from '../AddItem';
 import { TreeItem } from '../TreeItem';
 import { EditTreeItem } from '../EditTreeItem';
 import s from './CategoryTree.css';
-import { reducerName } from './CategoryReducer';
+import { reducerName, categoryReducer } from './CategoryReducer';
 import { addCategory } from './CategoryActions';
 
 class CategoryTreeComponent extends React.Component {
@@ -16,13 +16,14 @@ class CategoryTreeComponent extends React.Component {
     })
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
+    this.props.storeManager.addReducer(reducerName, categoryReducer);
 
     this.addCategory = this.addCategory.bind(this);
   }
 
-  addCategory(categoryName){
+  addCategory(categoryName) {
     return this.props.addCategory(null, categoryName);
   }
 
@@ -31,23 +32,23 @@ class CategoryTreeComponent extends React.Component {
     return items.map(item => {
       return item && (
         <div key={item.id} className={s['items-block']}>
-          {this.props.edit!==item.id?
-            <TreeItem className={s['tree-item']} level={level} item={item} reducerName={reducerName}/>:
-            <EditTreeItem className={s['tree-item']} item={item} reducerName={reducerName}/>}
-          {this.props.expandedItems.find(i => i === item.id) && this.buildList(item.children.map(i => allItems.find(item=>item && item.id === i)), level + 1, allItems)}
+          {this.props.edit !== item.id ?
+            <TreeItem className={s['tree-item']} level={level} item={item} reducerName={reducerName} /> :
+            <EditTreeItem className={s['tree-item']} item={item} reducerName={reducerName} />}
+          {this.props.expandedItems.find(i => i === item.id) && this.buildList(item.children.map(i => allItems.find(item => item && item.id === i)), level + 1, allItems)}
         </div>
       );
     })
   }
 
   render() {
-    
+
     const items = this.buildList(this.props.items.filter(i => i && !i.parent), 0, this.props.items);
 
     return (
       <section className={s.wrapper}>
         {this.props.add && <div className={s['add-item']}>
-          <AddItem label={'Category title'} buttonText={'save'} id={s.wrapper} onClick={this.addCategory}/>
+          <AddItem label={'Category title'} buttonText={'save'} id={s.wrapper} onClick={this.addCategory} />
         </div>}
         <div className={s.tree}>
           {items}
@@ -60,8 +61,8 @@ class CategoryTreeComponent extends React.Component {
 
 const mapState = (state) => ({
   expandedItems: state[reducerName].expanded,
-  items:state[reducerName].items.map(i => state.globalStorage[i]),
-  edit:state[reducerName].edit,
+  items: state[reducerName].items.map(i => state.globalStorage[i]),
+  edit: state[reducerName].edit,
 });
 
 const mapDispatch = {
