@@ -254,7 +254,7 @@ const clientConfig = extend(true, {}, config, {
     ],
 
     new Visualizer({
-      filename: '../../stats.html'
+      filename: '../../public/stats.html'
     })
   ],
 
