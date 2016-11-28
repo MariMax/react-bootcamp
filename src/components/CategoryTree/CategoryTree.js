@@ -6,6 +6,7 @@ import { TreeItem } from '../TreeItem';
 import { EditTreeItem } from '../EditTreeItem';
 import s from './CategoryTree.css';
 import { reducerName } from './CategoryReducer';
+import { addCategory } from './CategoryActions';
 
 class CategoryTreeComponent extends React.Component {
   static propTypes = {
@@ -15,15 +16,25 @@ class CategoryTreeComponent extends React.Component {
     })
   };
 
+  constructor(props){
+    super(props);
+
+    this.addCategory = this.addCategory.bind(this);
+  }
+
+  addCategory(categoryName){
+    return this.props.addCategory(null, categoryName);
+  }
+
   buildList(items, level, allItems) {
     if (!items || Object.keys(items).length === 0) return null;
     return items.map(item => {
-      return (
+      return item && (
         <div key={item.id} className={s['items-block']}>
           {this.props.edit!==item.id?
             <TreeItem className={s['tree-item']} level={level} item={item} reducerName={reducerName}/>:
             <EditTreeItem className={s['tree-item']} item={item} reducerName={reducerName}/>}
-          {this.props.expandedItems.find(i => i === item.id) && this.buildList(item.children.map(i => allItems.find(item=>item.id === i)), level + 1, allItems)}
+          {this.props.expandedItems.find(i => i === item.id) && this.buildList(item.children.map(i => allItems.find(item=>item && item.id === i)), level + 1, allItems)}
         </div>
       );
     })
@@ -31,12 +42,12 @@ class CategoryTreeComponent extends React.Component {
 
   render() {
     
-    const items = this.buildList(this.props.items.filter(i => !i.parent), 0, this.props.items);
+    const items = this.buildList(this.props.items.filter(i => i && !i.parent), 0, this.props.items);
 
     return (
       <section className={s.wrapper}>
         {this.props.add && <div className={s['add-item']}>
-          <AddItem label={'Category title'} buttonText={'save'} id={s.wrapper} />
+          <AddItem label={'Category title'} buttonText={'save'} id={s.wrapper} onClick={this.addCategory}/>
         </div>}
         <div className={s.tree}>
           {items}
@@ -53,4 +64,8 @@ const mapState = (state) => ({
   edit:state[reducerName].edit,
 });
 
-export const CategoryTree = connect(mapState, null)(withStyles(s)(CategoryTreeComponent));
+const mapDispatch = {
+  addCategory,
+};
+
+export const CategoryTree = connect(mapState, mapDispatch)(withStyles(s)(CategoryTreeComponent));

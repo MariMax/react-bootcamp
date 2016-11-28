@@ -7,6 +7,8 @@ import {
     EDIT_CATEGORY,
     RENAME_CATEGORY,
     CANCEL_EDIT_CATEGORY,
+    REMOVE_CATEGORY,
+    ADD_CATEGORY
 } from './CategoryActions';
 
 const initialState = {
@@ -40,6 +42,12 @@ export const categoryReducer = (state = initialState, action) => {
 
         case RENAME_CATEGORY: case CANCEL_EDIT_CATEGORY:
             return {...state, edit: null}
+            
+        case REMOVE_CATEGORY:
+            return {...state, items: state.items.filter(i=>i !== action.payload)}
+
+        case ADD_CATEGORY:
+            return {...state, items: [action.payload, ...state.items]}
 
         default: return state;
     }

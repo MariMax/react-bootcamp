@@ -2,7 +2,13 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './TreeItem.css';
 import { Link } from '../Link';
-import { expandCategory, collapseCategory, editCategory } from '../CategoryTree/CategoryActions';
+import {
+  expandCategory,
+  collapseCategory,
+  editCategory,
+  removeCategory,
+  addCategory,
+} from '../CategoryTree/CategoryActions';
 import { connect } from 'react-redux';
 
 class TreeItemComponent extends React.Component {
@@ -40,7 +46,7 @@ class TreeItemComponent extends React.Component {
   addNested(event) {
     event.preventDefault();
     event.stopPropagation();
-    //todo propagate add nested on top level
+    return this.props.addCategory(this.props.item.id, 'new category');
   }
 
   edit(event) {
@@ -53,7 +59,7 @@ class TreeItemComponent extends React.Component {
   remove(event) {
     event.preventDefault();
     event.stopPropagation();
-    //todo propagate remove on top level
+    return this.props.removeCategory(this.props.item.id);
   }
 
   render() {
@@ -78,7 +84,9 @@ const mapState = (state, ownProps) => ({
 const mapDispatch = {
   expandCategory,
   collapseCategory,
-  editCategory
+  editCategory,
+  removeCategory,
+  addCategory
 };
 
 export const TreeItem = connect(mapState, mapDispatch)(withStyles(s)(TreeItemComponent));
