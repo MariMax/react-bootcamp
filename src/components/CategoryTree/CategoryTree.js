@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { AddItem } from '../AddItem';
 import { TreeItem } from '../TreeItem';
+import { EditTreeItem } from '../EditTreeItem';
 import s from './CategoryTree.css';
 import { reducerName } from './CategoryReducer';
 
@@ -19,7 +20,9 @@ class CategoryTreeComponent extends React.Component {
     return items.map(item => {
       return (
         <div key={item.id} className={s['items-block']}>
-          <TreeItem className={s['tree-item']} level={level} item={item} reducerName={reducerName}/>
+          {this.props.edit!==item.id?
+            <TreeItem className={s['tree-item']} level={level} item={item} reducerName={reducerName}/>:
+            <EditTreeItem className={s['tree-item']} item={item} reducerName={reducerName}/>}
           {this.props.expandedItems.find(i => i === item.id) && this.buildList(item.children.map(i => allItems.find(item=>item.id === i)), level + 1, allItems)}
         </div>
       );
@@ -46,7 +49,8 @@ class CategoryTreeComponent extends React.Component {
 
 const mapState = (state) => ({
   expandedItems: state[reducerName].expanded,
-  items:state[reducerName].items.map(i => state.globalStorage[i])
+  items:state[reducerName].items.map(i => state.globalStorage[i]),
+  edit:state[reducerName].edit,
 });
 
 export const CategoryTree = connect(mapState, null)(withStyles(s)(CategoryTreeComponent));

@@ -1,0 +1,6 @@
+{
+  "name": "EditTreeItem",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./EditTreeItem.js"
+}

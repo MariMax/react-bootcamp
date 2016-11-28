@@ -3,13 +3,17 @@ import {
     UNSELECT_CATEGORY,
     SET_CATEGORIES_DATA,
     EXPAND_CATEGORY,
-    COLLAPSE_CATEGORY
+    COLLAPSE_CATEGORY,
+    EDIT_CATEGORY,
+    RENAME_CATEGORY,
+    CANCEL_EDIT_CATEGORY,
 } from './CategoryActions';
 
 const initialState = {
     selected: null,
     expanded: [],
-    items: []
+    items: [],
+    edit:null,
 }
 
 export const reducerName = 'categories';
@@ -29,7 +33,13 @@ export const categoryReducer = (state = initialState, action) => {
             return {...state, expanded:[...state.expanded, action.payload].filter((i, index, self)=>self.indexOf(i)===index) }
 
         case COLLAPSE_CATEGORY:
-            return {...state, expanded:[...state.expanded].filter(i=>i!==action.payload) }            
+            return {...state, expanded:[...state.expanded].filter(i=>i!==action.payload) }
+
+        case EDIT_CATEGORY:
+            return {...state, edit:action.payload};
+
+        case RENAME_CATEGORY: case CANCEL_EDIT_CATEGORY:
+            return {...state, edit: null}
 
         default: return state;
     }
