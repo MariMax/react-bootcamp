@@ -13,7 +13,7 @@ export const CategoryDetails = withStyles(s)(({storeManager}) => {
   return (
     <div className={s.root}>
       <Header>
-        <h1 className={s.title}>Category Datails</h1>
+        <h1 className={s.title}>Category Details</h1>
         <CheckBox checked={false} label={`active only`} id={s.title} />
         <Search />
       </Header>

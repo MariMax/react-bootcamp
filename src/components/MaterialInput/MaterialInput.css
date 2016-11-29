@@ -1,0 +1,75 @@
+@import '../variables.css';
+
+.form-control {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  position: relative;
+  /*margin-top: 1.7rem;*/
+}
+
+.form-control input{
+  outline: none;
+  z-index: 1;
+  position: relative;
+  background: none;
+  width: 100%;
+  min-height: 1.4rem;
+  border: 0;
+  color: var(--graphite);
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.form-control > input:focus ~ label,
+.form-control > input.not-empty ~ label {
+  color: var(--sharp-blue);
+  transform: translate(-7%, -100%) scale(0.9);
+}
+
+.form-control > input:focus ~ .bar:before,
+.form-control > input:focus ~ .bar:after {
+  width: 50%;
+}
+
+.form-control > label {
+  font-weight: 700;
+}
+
+.form-control > label {
+  position: absolute;
+  top: 0rem;
+  left: 0;
+  color: var(--graphite);
+  font-size: 1.4rem;
+  font-weight: 300;
+  line-height: 1.4rem;
+  transition: all 0.2s ease;
+}
+
+.form-control .bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: var(--graphite);
+  width: 100%;
+  height: 1px;
+}
+
+.form-control .bar:before,
+.form-control .bar:after {
+  content: '';
+  position: absolute;
+  background: var(--sharp-blue);
+  width: 0;
+  height: 2px;
+  transition: .2s ease;
+}
+
+.form-control .bar:before {
+  left: 50%;
+}
+
+.form-control .bar:after {
+  right: 50%;
+}

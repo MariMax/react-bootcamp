@@ -12,13 +12,18 @@ class TaskListComponent extends React.Component {
     super(props);
 
     this.items = listData;
+    this.save = this.save.bind(this);
+  }
+
+  save(){
+
   }
 
   render() {
     return (
       <section className={s.wrapper}>
         <div className={s['add-item']}>
-          <AddItem label={'Task title'} buttonText={'save'} id={s.wrapper} />
+          <AddItem label={'Task title'} saveText={'save'} id={s.wrapper} onSave={this.save}/>
         </div>
         <div className={s.list}>
           {this.items.map(i => {

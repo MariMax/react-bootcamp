@@ -5,7 +5,17 @@
 }
 
 .add-item{
+    white-space: nowrap;
+    text-overflow: ellipsis;  
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 1.4rem;
+    box-shadow: var(--shadow2);
+}
 
+.add-item button{
+  padding: 1rem;
 }
 
 .list{

@@ -2,135 +2,13 @@
 
 .wrapper{
   margin: 1rem;
-  padding: 1rem;
+  padding: 1.4rem;
   box-shadow: var(--shadow1);
   display: flex;
   align-items: center;
   overflow: hidden;
-  cursor: pointer;
 }
 
-.wrapper button{
-  padding: .4rem;
-}
-
-.save{
+.wrapper button::first-of-type{
   margin-left: auto;
-}
-
-.cancel{
-  margin-left: 1rem;
-}
-
-.title{
-  font-size: 1.4rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.selected{
-  background-color: var(--sharp-blue);
-}
-
-.selected button{
-  background-color: var(--lime-green);
-  color: var(--white);
-}
-
-.deep{
-  border-radius: 50%;
-  background-color: var(--raspberry);
-  width: 1rem;
-  height: 1rem;
-  margin-right: .5rem;
-  flex-shrink: 0;
-}
-
-.form-control {
-  display: flex;
-  flex-flow: column;
-  width: 100%;
-  position: relative;
-  max-width: 40rem;
-  margin-top: .3rem;
-  margin-right: 1rem
-}
-
-.form-control input{
-  outline: none;
-  z-index: 1;
-  position: relative;
-  background: none;
-  width: 100%;
-  min-height: 2rem;
-  border: 0;
-  color: var(--graphite);
-  font-size: 1.5rem;
-  font-weight: 400;
-}
-
-.selected .form-control > input:focus ~ label,
-.selected .form-control > input.not-empty ~ label{
-  color: var(--white);
-}
-
-.form-control > input:focus ~ label,
-.form-control > input.not-empty ~ label{
-  color: var(--sharp-blue);
-  transform: translate(-12%, -50%) scale(0.75);
-}
-
-.form-control > input:focus ~ .bar:before,
-.form-control > input:focus ~ .bar:after{
-  width: 50%;
-}
-
-.form-control > label {
-  font-weight: 700;
-}
-
-.form-control > label {
-  position: absolute;
-  top: -.5rem;
-  left: 0;
-  color: var(--graphite);
-  font-size: 1.5rem;
-  font-weight: 300;
-  line-height: 3rem;
-  transition: all 0.2s ease;
-}
-
-.form-control .bar {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background: var(--graphite);
-  width: 100%;
-  height: 1px;
-}
-
-.selected .form-control .bar:before,
-.selected .form-control .bar:after{
-  background: var(--white);
-}
-
-.form-control .bar:before,
-.form-control .bar:after {
-  content: '';
-  position: absolute;
-  background: var(--sharp-blue);
-  width: 0;
-  height: 2px;
-  transition: .2s ease;
-}
-
-.form-control .bar:before {
-  left: 50%;
-}
-
-.form-control .bar:after {
-  right: 50%;
 }

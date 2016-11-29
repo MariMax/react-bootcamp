@@ -4,6 +4,7 @@ import s from './EditTreeItem.css';
 import { Link } from '../Link';
 import { renameCategory, cancelEditCategory } from '../CategoryTree/CategoryActions';
 import { connect } from 'react-redux';
+import { AddItem } from '../AddItem';
 
 class EditTreeItemComponent extends React.Component {
   static propTypes = {
@@ -25,43 +26,29 @@ class EditTreeItemComponent extends React.Component {
 
     this.save = this.save.bind(this);
     this.cancel = this.cancel.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  save(event) {
-    event.preventDefault();
-    event.stopPropagation();
+  save(categoryName) {
     const {item, renameCategory} = this.props;
-    return renameCategory(item.id, this.state.value)
+    return renameCategory(item.id, categoryName)
   }
 
-  cancel(event) {
-    event.preventDefault();
-    event.stopPropagation();
+  cancel() {
     return this.props.cancelEditCategory();
-  }
-
-  handleChange(event) {
-    this.setState({value:event.target.value});
   }
 
   render() {
     return (
       <div id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
-        <div className={s['form-control']}>
-          <input className={this.state.value.length ? s['not-empty'] : ''} id={`${this.props.item.id}_edit`} type="text" value={this.state.value} onChange={this.handleChange} />
-          <label htmlFor={`${this.props.item.id}_edit`}>Category title</label>
-          <div className={s.bar}></div>
-        </div>
-
-        <button className={s.save} onClick={this.save} type="button">
-          <svg width="20" height="20" dangerouslySetInnerHTML={{ __html: this.saveSvg }} />
-          save
-        </button>
-        <button className={s.cancel} onClick={this.cancel} type="button">
-          <svg width="20" height="20" dangerouslySetInnerHTML={{ __html: this.cancelSvg }} />
-          cancel
-        </button>
+        <AddItem 
+          id={`${this.props.item.id}_edit`} 
+          value={this.state.value} 
+          onSave={this.save} 
+          onCancel={this.cancel}
+          saveText="save"
+          cancelText="cancel"
+          label="Category title"
+          />
       </div>
     );
   }

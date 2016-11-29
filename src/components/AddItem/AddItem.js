@@ -1,43 +1,64 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './AddItem.css';
+import { MaterialInput } from '../MaterialInput';
 
 class AddItemComponent extends React.Component {
   static propTypes = {
     label: PropTypes.string,
     id: PropTypes.string,
-    buttonText: PropTypes.string,
-    onClick: PropTypes.func,
+    saveText: PropTypes.string,
+    cancelText: PropTypes.string,
+    onSave: PropTypes.func,
+    onCancel: PropTypes.func,
+    value: PropTypes.string,
+    topClass: PropTypes.string,
   };
+
   constructor(props) {
     super(props);
-    this.state = { id: props.id || (new Date()).valueOf(), value: '' };
+    this.state = { id: props.id || (new Date()).valueOf(), value: this.props.value || '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.save = this.save.bind(this);
+    this.cancel = this.cancel.bind(this);
+
+    this.saveSvg = `<use xlink:href="#icon-check"/>`;
+    this.cancelSvg = `<use xlink:href="#icon-close"/>`;
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
+  handleChange(value) {
+    this.setState({ value });
   }
 
-  save(){
-    if (this.state.value){
+  save(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.state.value) {
       const categoryName = this.state.value;
-      this.setState({value: ''}); 
-      return this.props.onClick(categoryName);
+      this.setState({ value: '' });
+      return this.props.onSave(categoryName);
     }
+  }
+
+  cancel(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return this.props.onCancel();
   }
 
   render() {
     return (
       <div className={s.wrapper}>
-        <div className={s['form-control']}>
-          <input value={this.state.value} className={this.state.value.length ? s['not-empty'] : ''} type="text" id={this.state.id} onChange={this.handleChange} />
-          <label htmlFor={this.state.id}>{this.props.label}</label>
-          <div className={s.bar}></div>
-        </div>
-        <button type="button" onClick={this.save}>{this.props.buttonText}</button>
+        <MaterialInput topClass={this.props.topClass} id={this.state.id} value={this.state.value} onChange={this.handleChange} label={this.props.label} />
+        {this.props.onSave && <button type="button" onClick={this.save}>
+          <svg width="20" height="20" dangerouslySetInnerHTML={{ __html: this.saveSvg }} />
+          {this.props.saveText}
+        </button>}
+        {this.props.onCancel && <button type="button" onClick={this.cancel}>
+          <svg width="20" height="20" dangerouslySetInnerHTML={{ __html: this.cancelSvg }} />
+          {this.props.cancelText}
+        </button>}
       </div>
     );
   }

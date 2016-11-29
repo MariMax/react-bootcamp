@@ -48,7 +48,7 @@ class CategoryTreeComponent extends React.Component {
     return (
       <section className={s.wrapper}>
         {this.props.add && <div className={s['add-item']}>
-          <AddItem label={'Category title'} buttonText={'save'} id={s.wrapper} onClick={this.addCategory} />
+          <AddItem label={'Category title'} saveText={'save'} id={s.wrapper} onSave={this.addCategory} />
         </div>}
         <div className={s.tree}>
           {items}

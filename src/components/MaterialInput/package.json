@@ -1,0 +1,6 @@
+{
+  "name": "MaterialInput",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MaterialInput.js"
+}
