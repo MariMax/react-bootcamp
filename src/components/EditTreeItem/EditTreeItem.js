@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './EditTreeItem.css';
 import { Link } from '../Link';
-import { renameCategory, cancelEditCategory } from '../CategoryTree/CategoryActions';
+import { renameCategory, cancelEditCategory, removeCategory } from '../CategoryTree/CategoryActions';
 import { connect } from 'react-redux';
 import { AddItem } from '../AddItem';
 
@@ -12,7 +12,6 @@ class EditTreeItemComponent extends React.Component {
       title: PropTypes.string,
       id: PropTypes.string,
       children: PropTypes.array,
-      tasks: PropTypes.array,
     }),
     reducerName: PropTypes.string,
   };
@@ -34,16 +33,19 @@ class EditTreeItemComponent extends React.Component {
   }
 
   cancel() {
+    if (this.props.item.tmp) {
+      return this.props.removeCategory(this.props.item.id);
+    }
     return this.props.cancelEditCategory();
   }
 
   render() {
     return (
       <div id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
-        <AddItem 
-          id={`${this.props.item.id}_edit`} 
-          value={this.state.value} 
-          onSave={this.save} 
+        <AddItem
+          id={`${this.props.item.id}_edit`}
+          value={this.state.value}
+          onSave={this.save}
           onCancel={this.cancel}
           saveText="save"
           cancelText="cancel"
@@ -60,7 +62,8 @@ const mapState = (state, ownProps) => ({
 
 const mapDispatch = {
   renameCategory,
-  cancelEditCategory
+  cancelEditCategory,
+  removeCategory,
 };
 
 export const EditTreeItem = connect(mapState, mapDispatch)(withStyles(s)(EditTreeItemComponent));

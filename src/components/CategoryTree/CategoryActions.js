@@ -18,6 +18,7 @@ export const addCategory = (id, title) => {
     title: title || 'new category',
     children: [],
     parent: id,
+    tmp: true,
   };
 
   return {

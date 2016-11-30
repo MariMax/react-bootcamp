@@ -44,7 +44,7 @@ const selectCategory = (state, id) => {
 
 const renameCategory = (state, id, title) => {
   const item = state.items[id];
-  const newItem = {...item, title: title };
+  const newItem = {...item, title: title, tmp: false };
   state = setItem(state, newItem);
   return {...state, edit: null };
 };
@@ -78,7 +78,7 @@ export const categoryReducer = (state = initialState, action) => {
       return expandCategory(state, action.payload);
 
     case COLLAPSE_CATEGORY:
-      return {...state, expanded: [...state.expanded].filter(i => i !== action.payload) }
+      return {...state, expanded: [...state.expanded].filter(i => i !== action.payload) };
 
     case EDIT_CATEGORY:
       return editCategory(state, action.payload);
@@ -87,10 +87,16 @@ export const categoryReducer = (state = initialState, action) => {
       return renameCategory(state, action.payload.id, action.payload.title);
 
     case CANCEL_EDIT_CATEGORY:
-      return {...state, edit: null }
+      return {...state, edit: null };
 
     case REMOVE_CATEGORY:
-      return {...state, items: state.items.filter(i => i.id !== action.payload) }
+      return {...state, items: Object.keys(state.items)
+        .reduce((result, key) => {
+          if (state.items[key].id === action.payload) return result;
+          result[key] = state.items[key];
+          return result;
+        }, {}),
+      };
 
     case ADD_CATEGORY:
       return addCategory(state, action.payload.id, action.payload.category);
