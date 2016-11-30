@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './AddItem.css';
 import { MaterialInput } from '../MaterialInput';
+import {v4} from 'uuid';
 
 class AddItemComponent extends React.Component {
   static propTypes = {
@@ -17,7 +18,7 @@ class AddItemComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { id: props.id || (new Date()).valueOf(), value: this.props.value || '' };
+    this.state = { id: props.id || v4(), value: this.props.value || '' };
 
     this.handleChange = this.handleChange.bind(this);
     this.save = this.save.bind(this);

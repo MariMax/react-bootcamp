@@ -61,7 +61,7 @@ class CategoryTreeComponent extends React.Component {
 
 const mapState = (state) => ({
   expandedItems: state[reducerName].expanded,
-  items: state[reducerName].items.map(i => state.globalStorage[i]),
+  items: Object.keys(state[reducerName].items).map(i=>state[reducerName].items[i]),
   edit: state[reducerName].edit,
 });
 
