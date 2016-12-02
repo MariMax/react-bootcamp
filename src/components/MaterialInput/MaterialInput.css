@@ -1,11 +1,15 @@
 @import '../variables.css';
 
+:root{
+  --material-input-base-color: var(--graphite);
+  --material-input-active-color: var(--sharp-blue);
+}
+
 .form-control {
   display: flex;
   flex-flow: column;
   width: 100%;
   position: relative;
-  /*margin-top: 1.7rem;*/
 }
 
 .form-control input{
@@ -14,21 +18,20 @@
   position: relative;
   background: none;
   width: 100%;
-  min-height: 1.4rem;
   border: 0;
   color: var(--graphite);
-  font-size: 1.4rem;
+  font-size: 4.5em;
   font-weight: 400;
 }
 
 .form-control > input:focus ~ label,
-.form-control > input.not-empty ~ label {
+.form-control > :global(input.not-empty) ~ label {
   color: var(--sharp-blue);
-  transform: translate(-7%, -100%) scale(0.9);
+  transform: translate(-12%, -75%) scale(0.75);
 }
 
-.form-control > input:focus ~ .bar:before,
-.form-control > input:focus ~ .bar:after {
+.form-control > input:focus ~ div:before,
+.form-control > input:focus ~ div:after {
   width: 50%;
 }
 
@@ -41,13 +44,13 @@
   top: 0rem;
   left: 0;
   color: var(--graphite);
-  font-size: 1.4rem;
+  font-size: 5em;
   font-weight: 300;
-  line-height: 1.4rem;
+  line-height: 1em;
   transition: all 0.2s ease;
 }
 
-.form-control .bar {
+.form-control div {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -56,8 +59,8 @@
   height: 1px;
 }
 
-.form-control .bar:before,
-.form-control .bar:after {
+.form-control div:before,
+.form-control div:after {
   content: '';
   position: absolute;
   background: var(--sharp-blue);
@@ -66,10 +69,10 @@
   transition: .2s ease;
 }
 
-.form-control .bar:before {
+.form-control div:before {
   left: 50%;
 }
 
-.form-control .bar:after {
+.form-control div:after {
   right: 50%;
 }

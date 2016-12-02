@@ -8,6 +8,7 @@ class MaterialInputComponent extends React.Component {
     onChange: PropTypes.func,
     value: PropTypes.string,
     label: PropTypes.string,
+    focus: PropTypes.bool,
   }
 
   constructor(props) {
@@ -27,12 +28,23 @@ class MaterialInputComponent extends React.Component {
     return this.props.onChange && this.props.onChange(this.state.value);
   }
 
+  componentDidMount(){
+    if (this.props.focus){
+      this.input.focus();
+    }
+  }
+
   render() {
     return (
       <div className={s['form-control']}>
-        <input value={this.state.value} className={`${this.state.value.length ? s['not-empty'] : ''}`} type="text" id={this.state.id} onChange={this.handleChange} />
+        <input 
+          value={this.state.value} 
+          className={`${this.state.value.length ? 'not-empty' : ''}`} 
+          type="text" id={this.state.id}
+          ref={input=>this.input = input} 
+          onChange={this.handleChange} />
         <label htmlFor={this.state.id}>{this.props.label}</label>
-        <div className={s.bar}></div>
+        <div></div>
       </div>
     );
   }

@@ -50,6 +50,7 @@ class EditTreeItemComponent extends React.Component {
           saveText="save"
           cancelText="cancel"
           label="Category title"
+          focus={true}
           />
       </div>
     );

@@ -14,12 +14,12 @@ class AddItemComponent extends React.Component {
     onCancel: PropTypes.func,
     value: PropTypes.string,
     topClass: PropTypes.string,
+    focus: PropTypes.bool,
   };
 
   constructor(props) {
     super(props);
     this.state = { id: props.id || v4(), value: this.props.value || '' };
-
     this.handleChange = this.handleChange.bind(this);
     this.save = this.save.bind(this);
     this.cancel = this.cancel.bind(this);
@@ -51,7 +51,7 @@ class AddItemComponent extends React.Component {
   render() {
     return (
       <div className={s.wrapper}>
-        <MaterialInput topClass={this.props.topClass} id={this.state.id} value={this.state.value} onChange={this.handleChange} label={this.props.label} />
+        <MaterialInput focus={this.props.focus} topClass={this.props.topClass} id={this.state.id} value={this.state.value} onChange={this.handleChange} label={this.props.label} />
         {this.props.onSave && <button type="button" onClick={this.save}>
           <svg width="20" height="20" dangerouslySetInnerHTML={{ __html: this.saveSvg }} />
           {this.props.saveText}
