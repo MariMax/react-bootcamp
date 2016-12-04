@@ -7,14 +7,15 @@ export const registerSW = _ => {
     navigator.serviceWorker.register('/sw.js').then(registration => {
         registration.onupdatefound = function() {
             console.log('A new version has been found... Installing...');
-
+            let oldVersion = null;
             registration.installing.onstatechange = function() {
                 if (this.state === 'installed') {
-                    registration.active && registration.active.postMessage('version');
+                    oldVersion = registration.active; 
                     return console.log('App updated');
                 }
 
                 if (this.state === 'activated') {
+                    oldVersion && registration.active.postMessage('version');
                     return console.log('activated');
                 }
 
