@@ -5,9 +5,13 @@ export const registerSW = _ => {
     }
 
     navigator.serviceWorker.register('/sw.js').then(registration => {
-        registration.onupdatefound = function() {
+        if (registration.active) {
+            registration.active.postMessage('version');
+        }
+
+        registration.onupdatefound = function () {
             console.log('A new version has been found... Installing...');
-            registration.installing.onstatechange = function() {
+            registration.installing.onstatechange = function () {
                 if (this.state === 'installed') {
                     return console.log('App updated');
                 }

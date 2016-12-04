@@ -5,12 +5,18 @@ import { connect } from 'react-redux';
 class SwUpdateNotificationComponent extends Component {
   componentDidMount() {
     const self = this;
+    let version = null;
     if (!('serviceWorker' in navigator) || !navigator) {
       return;
     }
     navigator.serviceWorker.onmessage = function (evt) {
       if (typeof evt.data.version !== 'undefined') {
-        self.props.showToaster(toasterTypes.success, 'Site is updated, please refresh for better UX');
+        if (!version) {
+          version = evt.data.version;
+        }
+        if (version !== evt.data.version) {
+          self.props.showToaster(toasterTypes.success, 'Site is updated, please refresh for better UX');
+        }
       };
     }
   }
@@ -20,4 +26,4 @@ class SwUpdateNotificationComponent extends Component {
   }
 }
 
-export const SwUpdateNotification = connect(null, {showToaster})(SwUpdateNotificationComponent);
+export const SwUpdateNotification = connect(null, { showToaster })(SwUpdateNotificationComponent);
