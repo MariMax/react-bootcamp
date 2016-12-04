@@ -1,4 +1,6 @@
-import React, { Children, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
+import { Toaster } from './Toaster';
+import { SwUpdateNotification } from './SwUpdateNotification';
 
 const ContextType = {
   insertCss: PropTypes.func.isRequired,
@@ -31,7 +33,7 @@ const ContextType = {
  *     container,
  *   );
  */
-class App extends React.PureComponent {
+class App extends PureComponent {
 
   static propTypes = {
     context: PropTypes.shape(ContextType).isRequired,
@@ -45,7 +47,14 @@ class App extends React.PureComponent {
   }
 
   render() {
-    return Children.only(this.props.children);
+    // return Children.only(this.props.children);
+    return (
+      <main>
+        <SwUpdateNotification/>
+        <Toaster stateName="Toaster"/>
+        {this.props.children}
+      </main>
+    )
   }
 
 }

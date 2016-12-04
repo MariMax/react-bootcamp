@@ -3,8 +3,16 @@ importScripts('/cache-manifest.js?__addHash');
 const NAME = 'react-bootcamp';
 let VERSION = '{{__version}}';
 if (VERSION==='{{__version}}'){
-  VERSION = 'max300'+(new Date()).valueOf();
+  VERSION = ''+(new Date()).valueOf();
 }
+
+self.onmessage = evt => {
+  if (evt.data === 'version') {
+    evt.source.postMessage({
+      version: VERSION
+    });
+  }
+};
 
 self.oninstall = evt => {
   // const urls = cacheManifest.map(url => {

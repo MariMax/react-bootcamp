@@ -18,9 +18,12 @@ class CategoryTreeComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.props.storeManager.addReducer(reducerName, categoryReducer);
 
     this.addCategory = this.addCategory.bind(this);
+  }
+
+  componentWillMount(){
+    this.props.storeManager.addReducer(reducerName, categoryReducer);
   }
 
   addCategory(categoryName) {
@@ -60,9 +63,9 @@ class CategoryTreeComponent extends React.Component {
 }
 
 const mapState = (state) => ({
-  expandedItems: state[reducerName].expanded,
-  items: Object.keys(state[reducerName].items).map(i=>state[reducerName].items[i]),
-  edit: state[reducerName].edit,
+  expandedItems: state[reducerName]?state[reducerName].expanded:[],
+  items: state[reducerName]?Object.keys(state[reducerName].items).map(i=>state[reducerName].items[i]):[],
+  edit: state[reducerName] && state[reducerName].edit,
 });
 
 const mapDispatch = {

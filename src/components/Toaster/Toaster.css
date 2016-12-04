@@ -1,0 +1,68 @@
+@import '../variables.css';
+
+.wrapper {
+  position: fixed;
+  top: 3rem;
+  right: 3rem;
+  width: calc(100% - 6rem);
+  max-width: 400px;
+
+  transform: translateX(150%);
+  transition: transform .5s;
+  font-size: 1.4rem;
+
+  z-index: 100;
+}
+
+.wrapper.active {
+  transform: translateX(0%);
+}
+
+.wrapper button{
+  display: none;
+}
+
+.wrapper.active button{
+  display: block;
+}
+
+.toast {
+  background: var(--white);
+  padding: 1rem 1.5rem;
+  border-left-style: solid;
+  border-left-width: .5rem;
+  border-radius: 2px;
+  box-shadow: var(--shadow2);
+}
+
+.default {
+  border-left-color: var(--gray);
+}
+
+.success {
+  border-left-color: var(--sharp-blue);
+}
+.warning {
+  border-left-color: var(--graphite);
+}
+.error{
+  border-left-color: var(--plum)
+}
+
+.close{
+  outline: 0;
+  cursor: pointer;
+  display: inline-block;
+  background: 0;
+  transition: .3s ease;
+  font-size: 0;
+  position: absolute;
+  top: .3rem;
+  right: .3rem;
+  overflow: hidden;
+  border: none;
+}
+
+.close:before{
+  font-size: 0;
+}
