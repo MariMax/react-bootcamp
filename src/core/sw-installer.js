@@ -10,7 +10,7 @@ export const registerSW = _ => {
 
             registration.installing.onstatechange = function() {
                 if (this.state === 'installed') {
-                    registration.active.postMessage('version');
+                    registration.active && registration.active.postMessage('version');
                     return console.log('App updated');
                 }
 
