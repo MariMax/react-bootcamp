@@ -3,7 +3,7 @@ importScripts('/cache-manifest.js?__addHash');
 const NAME = 'react-bootcamp';
 let VERSION = '{{__version}}';
 if (VERSION==='{{__version}}'){
-  VERSION = ''+(new Date()).valueOf();
+  VERSION = 'dev'+(new Date()).valueOf();
 }
 
 self.onmessage = evt => {
@@ -53,7 +53,7 @@ self.onfetch = evt => {
   const cacheName = NAME + '-v' + VERSION;
   if (evt.request.url.includes('browser-sync') ||
     evt.request.url.includes('webpack') || 
-    (evt.request.url.replace(self.location.origin, '') === '/' && VERSION.includes('max'))) {
+    (evt.request.url.replace(self.location.origin, '') === '/' && VERSION.includes('dev'))) {
     return evt.respondWith(fetch(evt.request));
   }
 
