@@ -50,6 +50,7 @@
 
 }
 
+.wrapper section:nth-child(1):nth-last-child(1),
 .left.active{
   transform: translateX(0)
 }

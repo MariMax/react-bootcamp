@@ -9,7 +9,7 @@ import { CategoryTree } from '../../components/CategoryTree';
 import { TaskList } from '../../components/TaskList';
 import s from './CategoryDetails.css';
 
-export const CategoryDetails = withStyles(s)(({storeManager}) => {
+export const CategoryDetails = withStyles(s)(({storeManager, splitterId}) => {
   return (
     <div className={s.root}>
       <Header>
@@ -18,7 +18,7 @@ export const CategoryDetails = withStyles(s)(({storeManager}) => {
         <Search />
       </Header>
       <ProgressBar done={9} />
-      <SplitPage>
+      <SplitPage id={splitterId}>
         <CategoryTree add={true} storeManager={storeManager}/>
         <TaskList></TaskList>
       </SplitPage>

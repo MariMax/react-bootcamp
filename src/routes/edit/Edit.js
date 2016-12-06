@@ -15,9 +15,9 @@ export const Edit = withStyles(s)(({taskId, storeManager}) => {
       <Header>
         <h1 className={s.title}>Task Details</h1>
       </Header>
-      <SplitPage>
-        <CategoryTree storeManager={storeManager}/>
-        <TaskDetails id={taskId}/>
+      <SplitPage id="editTaskPageSplitter">
+        <CategoryTree storeManager={storeManager} />
+        <TaskDetails id={taskId} />
       </SplitPage>
     </div>
   )

@@ -15,7 +15,7 @@ class SwUpdateNotificationComponent extends Component {
           version = evt.data.version;
         }
         if (version !== evt.data.version) {
-          self.props.showToaster(toasterTypes.success, 'Site is updated, please refresh for better UX');
+          self.props.showToaster(toasterTypes.success, 'Please refresh for better UX');
         }
       };
     }

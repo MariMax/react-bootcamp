@@ -18,8 +18,8 @@ export const Home = withStyles(s)(({storeManager}) => {
         <Search />
       </Header>
       <ProgressBar done={9} />
-      <SplitPage>
-        <CategoryTree add={true} storeManager={storeManager}/>
+      <SplitPage id="homePageSplitter" >
+        <CategoryTree add={true} storeManager={storeManager} />
       </SplitPage>
     </div>
   )

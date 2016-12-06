@@ -34,9 +34,10 @@ class StoreService {
         store.replaceReducer(combineReducers(combination));
     }
 
-    addReducer(name, reducer) {
+    addReducer(name, reducer, action) {
         this.reducers = [...this.reducers.filter(i => i.name !== name), { name, reducer }];
         this._combineReducers();
+        action && store.dispatch(action);
     }
 
     subscribe() {
