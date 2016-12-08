@@ -22,6 +22,10 @@ import { treeData } from './components/CategoryTree/treeData';
 import { reducerName, categoryReducer } from './components/CategoryTree/CategoryReducer';
 import { setData } from './components/CategoryTree/CategoryActions';
 
+import { listData } from './components/TaskList/listData';
+import { reducerName as tasksReducerName, taskListReducer } from './components/TaskList/taskListReducer';
+import { setData as setTasks } from './components/TaskList/taskListActions';
+
 const app = express();
 
 //
@@ -50,8 +54,9 @@ app.get('*', async (req, res, next) => {
         cookie: req.headers.cookie,
       });
 
-    storeManager.addReducer(reducerName, categoryReducer);
-    storeManager.dispatch(setData(treeData));
+    storeManager.addReducer(reducerName, categoryReducer, setData(treeData));
+    storeManager.addReducer(tasksReducerName, taskListReducer);
+    treeData.forEach(i => storeManager.dispatch(setTasks(listData(i.id))));
 
     storeManager.dispatch(setRuntimeVariable({
       name: 'initialNow',

@@ -12,8 +12,8 @@ class CategoryTreeComponent extends React.Component {
   static propTypes = {
     add: PropTypes.bool,
     storeManager: PropTypes.shape({
-      getState: PropTypes.func,
-    })
+      addReducer: PropTypes.func,
+    }),
   };
 
   constructor(props) {

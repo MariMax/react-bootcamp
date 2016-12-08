@@ -1,14 +1,14 @@
 @import '../variables.css';
 
-.wrapper{
-    white-space: nowrap;
-    text-overflow: ellipsis;  
-    display: flex;
-    align-items: center;
-    width: 100%;
+.wrapper {
+  white-space: nowrap;
+  text-overflow: ellipsis;  
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-.wrapper button{
-  padding: .4rem;
-  margin:0 0 0 1rem;
+.wrapper button { 
+  padding: 0.4rem;
+  margin: 0 0 0 1rem;
 }

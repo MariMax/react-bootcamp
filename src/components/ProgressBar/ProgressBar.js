@@ -27,9 +27,9 @@ class ProgressBarComponent extends React.Component {
       <div className={s.progress} role="progressbar"
       aria-valuemin={this.state.min} aria-valuemax={this.state.max} 
       aria-valuenow={this.state.value}>
-        <div className={s.done}  style={{ width: `${this.state.scale}%` }} >
+        <div className={s.done}  style={{ width: `${this.props.done}%` }} >
         </div>
-        <div className={s.pending} style={{ width: `${100 - this.state.scale}%` }} >
+        <div className={s.pending} style={{ width: `${100 - this.props.done}%` }} >
         </div>
       </div>
     );

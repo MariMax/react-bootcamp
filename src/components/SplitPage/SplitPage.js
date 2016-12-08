@@ -24,9 +24,6 @@ class SplitPageComponent extends React.Component {
 
     this.swipe = this.swipe.bind(this);
 
-    this.leftSection = props.children[0] || props.children;
-    this.rightSection = props.children[1];
-
     this.chevronLeft = `<svg width="24" height="24"><use xlink:href="#icon-chevron-left"/></svg>`;
     this.chevronRight = `<svg width="24" height="24"><use xlink:href="#icon-chevron-right"/></svg>`;
   }
@@ -42,9 +39,9 @@ class SplitPageComponent extends React.Component {
   render() {
     return (
       <div className={s.wrapper}>
-        <section className={`${s.left} ${this.props.activeLeft ? s.active : ''}`}>{this.leftSection}</section>
-        {!!this.rightSection && <button className={`${s.devider} ${this.props.activeLeft ? s['right-side'] : s['left-side']}`} onClick={this.swipe} dangerouslySetInnerHTML={{ __html: this.props.activeLeft ? this.chevronLeft : this.chevronRight }} />}
-        {!!this.rightSection && <section className={`${s.right} ${this.props.activeLeft ? '' : s.active}`}>{this.rightSection}</section>}
+        <section className={`${s.left} ${this.props.activeLeft ? s.active : ''}`}>{this.props.children[0] || this.props.children}</section>
+        {!!this.props.children[1] && <button className={`${s.devider} ${this.props.activeLeft ? s['right-side'] : s['left-side']}`} onClick={this.swipe} dangerouslySetInnerHTML={{ __html: this.props.activeLeft ? this.chevronLeft : this.chevronRight }} />}
+        {!!this.props.children[1] && <section className={`${s.right} ${this.props.activeLeft ? '' : s.active}`}>{this.props.children[1]}</section>}
       </div>
     );
   }

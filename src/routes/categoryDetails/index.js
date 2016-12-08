@@ -3,7 +3,7 @@ import { CategoryDetails } from './CategoryDetails';
 import fetch from '../../core/fetch';
 import Layout from '../../components/Layout';
 import { selectCategory } from '../../components/CategoryTree/CategoryActions';
-import { categoryReducer, reducerName } from '../../components/CategoryTree/CategoryReducer';
+import { reducerName } from '../../components/CategoryTree/CategoryReducer';
 import { setActiveSide, RIGHT_ACTIVE } from '../../components/SplitPage/reducer';
 
 export default {
@@ -12,12 +12,22 @@ export default {
 
   async action({params, storeManager}) {
     const splitterId = `categoryDetailsPageSplitter`;
-    storeManager.addReducer(reducerName, categoryReducer, selectCategory(params.id));
+    const title = `Category Details`;
+    
+    storeManager.dispatch(selectCategory(params.id));
     setTimeout(_ => storeManager.dispatch(setActiveSide(splitterId, RIGHT_ACTIVE)), 100);
 
     return {
-      title: `Category details`,
-      component: <Layout><CategoryDetails splitterId={splitterId} storeManager={storeManager} /></Layout>,
+      title,
+      component: (
+        <Layout>
+          <CategoryDetails
+            title={title}
+            categoryId={params.id}
+            splitterId={splitterId}
+            storeManager={storeManager} />
+        </Layout>
+      ),
     };
   },
 
