@@ -11,7 +11,7 @@ function isModifiedEvent(event) {
 
 export class Link extends React.Component {
   static propTypes = {
-    to: PropTypes.string.isRequired,
+    to: PropTypes.string,
     children: PropTypes.node,
     onClick: PropTypes.func,
   };
@@ -30,11 +30,11 @@ export class Link extends React.Component {
     }
 
     event.preventDefault();
-    history.push(this.props.to);
+    this.props.to && history.push(this.props.to);
   };
 
   render() {
     const { to, children, ...props } = this.props;
-    return <a href={to} {...props} onClick={this.handleClick}>{children}</a>;
+    return <a href={to||''} {...props} onClick={this.handleClick}>{children}</a>;
   }
 }

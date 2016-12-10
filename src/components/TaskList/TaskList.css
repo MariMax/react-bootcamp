@@ -24,5 +24,19 @@
   overflow-x: hidden;
   overflow-y: auto;
   box-shadow: var(--shadow2);
-  margin-top:1rem
+  margin-top:1rem;
+  display: flex;
+  flex-flow: column;
+}
+
+.empty{
+  display: none;
+}
+
+.empty:nth-child(1):nth-last-child(1){
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
 }

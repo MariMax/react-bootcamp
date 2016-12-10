@@ -1,6 +1,4 @@
 import {
-  SELECT_CATEGORY,
-  UNSELECT_CATEGORY,
   SET_CATEGORIES_DATA,
   EXPAND_CATEGORY,
   COLLAPSE_CATEGORY,
@@ -12,7 +10,6 @@ import {
 } from './CategoryActions';
 
 const initialState = {
-  selected: null,
   expanded: [],
   items: {},
   edit: null,
@@ -30,16 +27,6 @@ const setItem = (state, item) => ({
 
 const expandCategory = (state, id) => {
   return {...state, expanded: [...state.expanded, id].filter((i, index, self) => self.indexOf(i) === index) };
-}
-
-const selectCategory = (state, id) => {
-  let item = state.items[id];
-  while (item.parent) {
-    state = expandCategory(state, item.parent);
-    item = state.items[item.parent];
-  }
-
-  return {...state, selected: id }
 }
 
 const renameCategory = (state, id, title) => {
@@ -65,12 +52,6 @@ const addCategory = (state, id, category) => {
 
 export const categoryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SELECT_CATEGORY:
-      return selectCategory(state, action.payload);
-
-    case UNSELECT_CATEGORY:
-      return {...state, selected: null };
-
     case SET_CATEGORIES_DATA:
       return {...state, items: action.payload };
 

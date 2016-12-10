@@ -10,7 +10,7 @@ import { TaskList } from '../../components/TaskList';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './CategoryDetails.css';
 
-export const CategoryDetails = withStyles(s)(({storeManager, splitterId, categoryId, title}) => {
+export const CategoryDetails = withStyles(s)(({storeManager, splitterId, categoryId, title, taskId}) => {
   return (
     <div className={s.root}>
       <Header>
@@ -20,8 +20,8 @@ export const CategoryDetails = withStyles(s)(({storeManager, splitterId, categor
       </Header>
       <ProgressBar done={7} />
       <SplitPage id={splitterId}>
-        <CategoryTree add={true} storeManager={storeManager}/>
-        <TaskList categoryId={categoryId} storeManager={storeManager}></TaskList>
+        <CategoryTree categoryId={categoryId} add={true} storeManager={storeManager}/>
+        <TaskList categoryId={categoryId} taskId={taskId} storeManager={storeManager}></TaskList>
       </SplitPage>
     </div>
   )

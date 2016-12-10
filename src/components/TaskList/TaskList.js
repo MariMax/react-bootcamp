@@ -5,12 +5,13 @@ import { AddItem } from '../AddItem';
 import { ListItem } from '../ListItem';
 import s from './TaskList.css';
 import { reducerName, taskListReducer } from './taskListReducer';
-import { showTasks } from './taskListActions';
+import { addTask, changeTaskState } from './taskListActions';
 
 
 class TaskListComponent extends React.Component {
   static propTypes = {
     categoryId: PropTypes.string.isRequired,
+    taskId: PropTypes.string,
     storeManager: PropTypes.shape({
       addReducer: PropTypes.func,
     }),
@@ -26,8 +27,8 @@ class TaskListComponent extends React.Component {
     this.props.storeManager.addReducer(reducerName, taskListReducer);
   }
 
-  save() {
-
+  save(taskName) {
+    this.props.addTask(this.props.categoryId, taskName);
   }
 
   render() {
@@ -39,9 +40,17 @@ class TaskListComponent extends React.Component {
         <div className={s.list}>
           {this.props.items.map(i => {
             return (
-              <ListItem key={i.id} title={i.title} done={i.done} id={i.id} />
+              <ListItem key={i.id}
+                title={i.title}
+                done={i.done}
+                changeState={changeTaskState}
+                editRoute={`/edit/${i.id}`}
+                selectRoute={`/Category/${this.props.categoryId}/task/${i.id}`}
+                selected={this.props.taskId === i.id}
+                id={i.id} />
             )
           })}
+          <div className={s.empty}>Nothing here yet</div>
         </div>
       </section>
     );
@@ -52,6 +61,10 @@ const mapState = (state, ownProps) => ({
   items: state[reducerName] && Object.keys(state[reducerName].tasks)
     .filter(i => state[reducerName].tasks[i].categoryId === ownProps.categoryId)
     .map(i => state[reducerName].tasks[i]) || []
-})
+});
 
-export const TaskList = connect(mapState)(withStyles(s)(TaskListComponent));
+const mapDispatch = {
+  addTask,
+};
+
+export const TaskList = connect(mapState, mapDispatch)(withStyles(s)(TaskListComponent));

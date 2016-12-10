@@ -30,6 +30,10 @@
 }
 
 .empty{
+  display: none;
+}
+
+.empty:nth-child(1):nth-last-child(1){
   flex: 1;
   display: flex;
   justify-content: center;

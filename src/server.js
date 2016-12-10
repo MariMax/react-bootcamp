@@ -54,9 +54,9 @@ app.get('*', async (req, res, next) => {
         cookie: req.headers.cookie,
       });
 
-    storeManager.addReducer(reducerName, categoryReducer, setData(treeData));
-    storeManager.addReducer(tasksReducerName, taskListReducer);
-    treeData.forEach(i => storeManager.dispatch(setTasks(listData(i.id))));
+    // storeManager.addReducer(reducerName, categoryReducer, setData(treeData));
+    // storeManager.addReducer(tasksReducerName, taskListReducer);
+    // treeData.forEach(i => storeManager.dispatch(setTasks(listData(i.id))));
 
     storeManager.dispatch(setRuntimeVariable({
       name: 'initialNow',

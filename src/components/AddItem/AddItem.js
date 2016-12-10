@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './AddItem.css';
 import { MaterialInput } from '../MaterialInput';
-import {v4} from 'uuid';
+import { v4 } from 'uuid';
 
 class AddItemComponent extends React.Component {
   static propTypes = {
@@ -21,6 +21,7 @@ class AddItemComponent extends React.Component {
     super(props);
     this.state = { id: props.id || v4(), value: this.props.value || '' };
     this.handleChange = this.handleChange.bind(this);
+    this.handleControls = this.handleControls.bind(this);
     this.save = this.save.bind(this);
     this.cancel = this.cancel.bind(this);
 
@@ -32,25 +33,32 @@ class AddItemComponent extends React.Component {
     this.setState({ value });
   }
 
+  handleControls(event) {
+    switch (event.keyCode) {
+      case 13: return this.save(event);
+      case 27: return this.cancel(event);
+    }
+  }
+
   save(event) {
     event.preventDefault();
     event.stopPropagation();
     if (this.state.value) {
       const categoryName = this.state.value;
       this.setState({ value: '' });
-      return this.props.onSave(categoryName);
+      return this.props.onSave && this.props.onSave(categoryName);
     }
   }
 
   cancel(event) {
     event.preventDefault();
     event.stopPropagation();
-    return this.props.onCancel();
+    return this.props.onCancel && this.props.onCancel();
   }
 
   render() {
     return (
-      <div className={s.wrapper}>
+      <div className={s.wrapper} onKeyDown={this.handleControls}>
         <MaterialInput focus={this.props.focus} topClass={this.props.topClass} id={this.state.id} value={this.state.value} onChange={this.handleChange} label={this.props.label} />
         {this.props.onSave && <button type="button" onClick={this.save}>
           <svg width="20" height="20" dangerouslySetInnerHTML={{ __html: this.saveSvg }} />

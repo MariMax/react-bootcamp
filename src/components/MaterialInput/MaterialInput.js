@@ -25,7 +25,7 @@ class MaterialInputComponent extends React.Component {
 
   handleChange(event) {
     this.setState({ value: event.target.value });
-    return this.props.onChange && this.props.onChange(this.state.value);
+    return this.props.onChange && this.props.onChange(event.target.value);
   }
 
   componentDidMount(){

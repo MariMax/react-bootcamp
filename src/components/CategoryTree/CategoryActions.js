@@ -1,7 +1,5 @@
 import { v4 } from 'uuid';
 
-export const SELECT_CATEGORY = 'SELECT_CATEGORY';
-export const UNSELECT_CATEGORY = 'UNSELECT_CATEGORY';
 export const EXPAND_CATEGORY = 'EXPAND_CATEGORY';
 export const COLLAPSE_CATEGORY = 'COLLAPSE_CATEGORY';
 export const RENAME_CATEGORY = 'RENAME_CATEGORY';
@@ -55,15 +53,6 @@ export const expandCategory = id => ({
   type: EXPAND_CATEGORY,
   payload: id,
 })
-
-export const selectCategory = id => ({
-  type: SELECT_CATEGORY,
-  payload: id,
-});
-
-export const unselectCategory = () => ({
-  type: UNSELECT_CATEGORY,
-});
 
 export const setData = dataArray => ({
   type: SET_CATEGORIES_DATA,

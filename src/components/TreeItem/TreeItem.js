@@ -21,6 +21,7 @@ class TreeItemComponent extends React.Component {
     }),
     level: PropTypes.number,
     reducerName: PropTypes.string,
+    selected: PropTypes.bool,
   };
 
   constructor(props) {
@@ -50,7 +51,6 @@ class TreeItemComponent extends React.Component {
   }
 
   edit(event) {
-    console.log('edit click');
     event.preventDefault();
     event.stopPropagation();
     return this.props.editCategory(this.props.item.id);
@@ -64,7 +64,7 @@ class TreeItemComponent extends React.Component {
 
   render() {
     return (
-      <Link to={`/Category/${this.props.item.id}`} id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
+      <Link to={`/Category/${this.props.item.id}/task`} id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
         <button onClick={this.expandHandle} className={s.expand} dangerouslySetInnerHTML={{ __html: this.props.expanded ? this.collapseIcon : this.expandIcon }} />
         {[...(new Array(this.props.level)).keys()].map((i, index) => <div key={index} className={s.deep}></div>)}
         <span className={s.title}>{this.props.item.title}</span>
@@ -77,8 +77,7 @@ class TreeItemComponent extends React.Component {
 }
 
 const mapState = (state, ownProps) => ({
-  expanded: state[ownProps.reducerName].expanded.find(i => i === ownProps.item.id),
-  selected: state[ownProps.reducerName].selected === ownProps.item.id,
+  expanded: state[ownProps.reducerName].expanded.find(i => i === ownProps.item.id)
 });
 
 const mapDispatch = {

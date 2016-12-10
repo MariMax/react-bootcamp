@@ -14,6 +14,7 @@ class CategoryTreeComponent extends React.Component {
     storeManager: PropTypes.shape({
       addReducer: PropTypes.func,
     }),
+    categoryId: PropTypes.string,
   };
 
   constructor(props) {
@@ -22,7 +23,7 @@ class CategoryTreeComponent extends React.Component {
     this.addCategory = this.addCategory.bind(this);
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.storeManager.addReducer(reducerName, categoryReducer);
   }
 
@@ -36,7 +37,7 @@ class CategoryTreeComponent extends React.Component {
       return item && (
         <div key={item.id} className={s['items-block']}>
           {this.props.edit !== item.id ?
-            <TreeItem className={s['tree-item']} level={level} item={item} reducerName={reducerName} /> :
+            <TreeItem className={s['tree-item']} level={level} item={item} selected={item.id === this.props.categoryId} reducerName={reducerName} /> :
             <EditTreeItem className={s['tree-item']} item={item} reducerName={reducerName} />}
           {this.props.expandedItems.find(i => i === item.id) && this.buildList(item.children.map(i => allItems.find(item => item && item.id === i)), level + 1, allItems)}
         </div>
@@ -55,7 +56,7 @@ class CategoryTreeComponent extends React.Component {
         </div>}
         <div className={s.tree}>
           {items}
-          {(!items) && <div className={s.empty}>Nothing here yet</div>}
+          <div className={s.empty}>Nothing here yet</div>
         </div>
       </section>
     );
@@ -63,8 +64,8 @@ class CategoryTreeComponent extends React.Component {
 }
 
 const mapState = (state) => ({
-  expandedItems: state[reducerName]?state[reducerName].expanded:[],
-  items: state[reducerName]?Object.keys(state[reducerName].items).map(i=>state[reducerName].items[i]):[],
+  expandedItems: state[reducerName] ? state[reducerName].expanded : [],
+  items: state[reducerName] ? Object.keys(state[reducerName].items).map(i => state[reducerName].items[i]) : [],
   edit: state[reducerName] && state[reducerName].edit,
 });
 
