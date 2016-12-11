@@ -44,7 +44,7 @@ class TaskListComponent extends React.Component {
                 title={i.title}
                 done={i.done}
                 changeState={this.props.changeTaskState}
-                editRoute={`/edit/${i.id}`}
+                editRoute={`/Category/${this.props.categoryId}/edit/${i.id}`}
                 selectRoute={`/Category/${this.props.categoryId}/task/${i.id}`}
                 selected={this.props.taskId === i.id}
                 id={i.id} />

@@ -9,15 +9,16 @@ import { CategoryTree } from '../../components/CategoryTree';
 import { TaskDetails } from '../../components/TaskDetails';
 import s from './Edit.css';
 
-export const Edit = withStyles(s)(({taskId, storeManager}) => {
+export const Edit = withStyles(s)(({taskId, storeManager, splitterId, title, categoryId}) => {
   return (
     <div className={s.root}>
       <Header>
-        <h1 className={s.title}>Task Details</h1>
+        <h1 className={s.title}>{title}</h1>
       </Header>
-      <SplitPage id="editTaskPageSplitter">
-        <CategoryTree storeManager={storeManager} />
-        <TaskDetails id={taskId} />
+      <ProgressBar done={7} />
+      <SplitPage id={splitterId}>
+        <CategoryTree categoryId={categoryId} storeManager={storeManager}/>
+        <TaskDetails id={taskId} categoryId={categoryId} />
       </SplitPage>
     </div>
   )

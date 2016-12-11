@@ -23,7 +23,9 @@ class ListItemComponent extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  editTask() {
+  editTask(event) {
+    event.preventDefault();
+    event.stopPropagation();
     history.push(this.props.editRoute);
   }
 

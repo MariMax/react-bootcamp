@@ -1,0 +1,6 @@
+{
+  "name": "MaterialTextArea",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MaterialTextArea.js"
+}

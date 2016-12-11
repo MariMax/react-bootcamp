@@ -1,0 +1,83 @@
+@import '../variables.css';
+
+:root{
+  --material-input-base-color: var(--graphite);
+  --material-input-active-color: var(--sharp-blue);
+}
+
+.form-control {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  position: relative;
+}
+
+.form-control textarea {
+  resize: none;
+  height: 10rem;
+}
+
+.form-control textarea{
+  outline: none;
+  z-index: 1;
+  position: relative;
+  background: none;
+  width: 100%;
+  border: 0;
+  color: var(--graphite);
+  font-size: 4.5em;
+  font-weight: 400;
+}
+
+.form-control > textarea:focus ~ label,
+.form-control > :global(textarea.not-empty) ~ label {
+  color: var(--sharp-blue);
+  transform: translate(-12%, -75%) scale(0.75);
+}
+
+.form-control > textarea:focus ~ div:before,
+.form-control > textarea:focus ~ div:after {
+  width: 50%;
+}
+
+.form-control > label {
+  font-weight: 700;
+}
+
+.form-control > label {
+  position: absolute;
+  top: 0rem;
+  left: 0;
+  color: var(--graphite);
+  font-size: 5em;
+  font-weight: 300;
+  line-height: 1em;
+  transition: all 0.2s ease;
+}
+
+.form-control div {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: var(--graphite);
+  width: 100%;
+  height: 1px;
+}
+
+.form-control div:before,
+.form-control div:after {
+  content: '';
+  position: absolute;
+  background: var(--sharp-blue);
+  width: 0;
+  height: 2px;
+  transition: .2s ease;
+}
+
+.form-control div:before {
+  left: 50%;
+}
+
+.form-control div:after {
+  right: 50%;
+}

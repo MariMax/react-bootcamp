@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './MaterialInput.css';
+import s from './MaterialTextArea.css';
 
-class MaterialInputComponent extends React.Component {
+class MaterialTextAreaComponent extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     onChange: PropTypes.func,
@@ -30,18 +30,18 @@ class MaterialInputComponent extends React.Component {
 
   componentDidMount(){
     if (this.props.focus){
-      this.input.focus();
+      this.textarea.focus();
     }
   }
 
   render() {
     return (
       <div className={s['form-control']}>
-        <input 
+        <textarea 
           value={this.state.value} 
           className={`${this.state.value.length ? 'not-empty' : ''}`} 
           type="text" id={this.state.id}
-          ref={input=>this.input = input} 
+          ref={textarea=>this.textarea = textarea} 
           onChange={this.handleChange} />
         <label htmlFor={this.state.id}>{this.props.label}</label>
         <div></div>
@@ -50,4 +50,4 @@ class MaterialInputComponent extends React.Component {
   }
 }
 
-export const MaterialInput = withStyles(s)(MaterialInputComponent);
+export const MaterialTextArea = withStyles(s)(MaterialTextAreaComponent);

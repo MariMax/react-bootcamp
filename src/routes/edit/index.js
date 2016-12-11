@@ -1,17 +1,30 @@
 import React from 'react';
-import {Edit} from './Edit';
+import { Edit } from './Edit';
 import fetch from '../../core/fetch';
 import Layout from '../../components/Layout';
+import { setActiveSide, RIGHT_ACTIVE } from '../../components/SplitPage/reducer';
 
 export default {
 
-  path: '/edit/:id',
+  path: '/Category/:id/edit/:taskId',
 
-  async action({params}) {
-
+  async action({params, storeManager}) {
+    const splitterId = 'editTaskPageSplitter';
+    const title = 'Task Details';
+    setTimeout(_ => storeManager.dispatch(setActiveSide(splitterId, RIGHT_ACTIVE)), 100);
+    
     return {
-      title: 'To Do List',
-      component: <Layout><Edit taskId={params.id}/></Layout>,
+      title,
+      component: (
+        <Layout>
+          <Edit
+            storeManager={storeManager}
+            title={title}
+            categoryId={params.id}
+            taskId={params.taskId}
+            splitterId={splitterId} />
+        </Layout>
+      ),
     };
   },
 
