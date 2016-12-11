@@ -5,6 +5,7 @@ export const SELECT_TASK = `SELECT_TASK`;
 export const SET_TASK_STATE = `SET_TASK_STATE`;
 export const ADD_TASK = `ADD_TASK`;
 export const MOVE_TASK = 'MOVE_TASK';
+export const UPDATE_TASK = 'UPDATE_TASK';
 
 export const setData = (tasksArray) => ({
   type: SET_TASKS_DATA,
@@ -32,6 +33,11 @@ export const addTask = (categoryId, taskName) => ({
 
 export const changeTaskState = (taskId, state) => ({
   type: SET_TASK_STATE,
-  payload: {taskId,state}
+  payload: { taskId, state }
 });
+
+export const updateTask = (task) => ({
+  type: UPDATE_TASK,
+  payload: task,
+})
 

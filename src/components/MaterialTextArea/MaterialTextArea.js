@@ -11,15 +11,21 @@ class MaterialTextAreaComponent extends React.Component {
     focus: PropTypes.bool,
   }
 
+  static defaultProps = {
+    value: '',
+    label: 'textarea',
+    focus: false,
+  }
+
   constructor(props) {
     super(props);
     this.state = { value: this.props.value || '', id: this.props.id };
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps){
-    if (this.state.value!==nextProps.value){
-      this.setState({value:nextProps.value});
+  componentWillReceiveProps(nextProps) {
+    if (this.state.value !== nextProps.value) {
+      this.setState({ value: nextProps.value });
     }
   }
 
@@ -28,8 +34,8 @@ class MaterialTextAreaComponent extends React.Component {
     return this.props.onChange && this.props.onChange(event.target.value);
   }
 
-  componentDidMount(){
-    if (this.props.focus){
+  componentDidMount() {
+    if (this.props.focus) {
       this.textarea.focus();
     }
   }
@@ -37,11 +43,11 @@ class MaterialTextAreaComponent extends React.Component {
   render() {
     return (
       <div className={s['form-control']}>
-        <textarea 
-          value={this.state.value} 
-          className={`${this.state.value.length ? 'not-empty' : ''}`} 
+        <textarea
+          value={this.state.value}
+          className={`${this.state.value.length ? 'not-empty' : ''}`}
           type="text" id={this.state.id}
-          ref={textarea=>this.textarea = textarea} 
+          ref={textarea => this.textarea = textarea}
           onChange={this.handleChange} />
         <label htmlFor={this.state.id}>{this.props.label}</label>
         <div></div>

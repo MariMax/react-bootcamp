@@ -11,6 +11,12 @@ class MaterialInputComponent extends React.Component {
     focus: PropTypes.bool,
   }
 
+  static defaultProps = {
+    value:'',
+    label: 'input',
+    focus: false,
+  }
+
   constructor(props) {
     super(props);
     this.state = { value: this.props.value || '', id: this.props.id };

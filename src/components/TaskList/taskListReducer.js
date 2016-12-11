@@ -2,6 +2,7 @@ import {
   SET_TASKS_DATA,
   ADD_TASK,
   SET_TASK_STATE,
+  UPDATE_TASK,
 } from './taskListActions';
 
 export const reducerName = `taskList`;
@@ -17,6 +18,12 @@ export const taskListReducer = (state = initialState, action) => {
 
     case ADD_TASK:
       return {...state, tasks: {...state.tasks, [action.payload.id]: action.payload } };
+
+    case UPDATE_TASK:
+      return {...state, tasks: {...state.tasks, [action.payload.id]: {
+        ...state.tasks[action.payload.id], 
+        ...action.payload
+      } } };
 
     case SET_TASK_STATE:
       return {...state, tasks: {
