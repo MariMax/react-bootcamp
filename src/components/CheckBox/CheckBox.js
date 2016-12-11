@@ -18,26 +18,26 @@ class CheckBoxComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { checked: this.props.checked, id:  this.props.id || v4()};
-    this.handleChange = this.handleChange.bind(this);
+    this.state = { isChecked: this.props.checked, id: this.props.id || v4() };
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.stopEvent = this.stopEvent.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ checked: !this.state.checked });
-    this.props.onChange && this.props.onChange(this.state.checked);
+  handleCheckboxChange(event) {
+    this.setState({ isChecked: event.target.checked });
+    this.props.onChange && this.props.onChange(event.target.checked);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.state.checked !== nextProps.checked) {
-      this.setState({ checked: nextProps.checked });
-    }
+  stopEvent(event){
+    event.stopPropagation();
   }
 
   render() {
     return (
-      <div className={s.wrapper}>
-        <input id={this.state.id} type="checkbox" onChange={this.handleChange} checked={this.state.checked} />
-        <label htmlFor={this.state.id}>{this.props.label}</label>
+      <div className={s.wrapper} onClick={this.stopEvent}>
+        <input id={this.state.id} type="checkbox" onChange={this.handleCheckboxChange}
+          checked={this.state.isChecked} />
+        <label htmlFor={this.state.id} >{this.props.label}</label>
       </div>
     );
   }

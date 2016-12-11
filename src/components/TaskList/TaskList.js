@@ -43,7 +43,7 @@ class TaskListComponent extends React.Component {
               <ListItem key={i.id}
                 title={i.title}
                 done={i.done}
-                changeState={changeTaskState}
+                changeState={this.props.changeTaskState}
                 editRoute={`/edit/${i.id}`}
                 selectRoute={`/Category/${this.props.categoryId}/task/${i.id}`}
                 selected={this.props.taskId === i.id}
@@ -65,6 +65,7 @@ const mapState = (state, ownProps) => ({
 
 const mapDispatch = {
   addTask,
+  changeTaskState,
 };
 
 export const TaskList = connect(mapState, mapDispatch)(withStyles(s)(TaskListComponent));
