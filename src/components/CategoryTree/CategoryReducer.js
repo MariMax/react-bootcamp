@@ -17,13 +17,21 @@ const initialState = {
 
 export const reducerName = 'categories';
 
-const setItem = (state, item) => ({
+const setItem = (state, item) => {
+ return state.items[item.id] ? {
+  ...state,
+   items: {
+      ...state.items,
+      [item.id]: item,
+   },
+ } : {
   ...state,
   items: {
+      [item.id]: item,
       ...state.items,
-    [item.id]: item,
     },
-});
+  };
+}
 
 const expandCategory = (state, id) => {
   return {...state, expanded: [...state.expanded, id].filter((i, index, self) => self.indexOf(i) === index) };
@@ -42,12 +50,26 @@ const addCategory = (state, id, category) => {
   state = setItem(state, category);
   if (id) {
     const item = state.items[id];
-    const newItem = {...item, children: [...item.children, category.id] };
+    const newItem = {...item, children: [category.id, ...item.children] };
     state = setItem(state, newItem);
     state = expandCategory(state, id);
     state = editCategory(state, category.id);
   }
   return state;
+}
+
+const removeCategory = (items, categoryId) => {
+  items[categoryId].children.forEach(childId=>{
+    removeCategory(items, childId);
+  });
+  items[categoryId] = null;
+  return Object.keys(items).reduce((result, key)=>{
+    if (items[key]){
+      result[key] = items[key];
+      return result;
+    }
+    return result;
+  },{});
 }
 
 export const categoryReducer = (state = initialState, action) => {
@@ -71,13 +93,7 @@ export const categoryReducer = (state = initialState, action) => {
       return {...state, edit: null };
 
     case REMOVE_CATEGORY:
-      return {...state, items: Object.keys(state.items)
-        .reduce((result, key) => {
-          if (state.items[key].id === action.payload) return result;
-          result[key] = state.items[key];
-          return result;
-        }, {}),
-      };
+      return {...state, items: removeCategory({...state.items}, action.payload)};
 
     case ADD_CATEGORY:
       return addCategory(state, action.payload.id, action.payload.category);
