@@ -15,7 +15,7 @@ export const Edit = withStyles(s)(({taskId, storeManager, splitterId, title, cat
       <Header>
         <h1 className={s.title}>{title}</h1>
       </Header>
-      <ProgressBar done={7} />
+      <ProgressBar storeManager={storeManager} />
       <SplitPage id={splitterId}>
         <CategoryTree categoryId={categoryId} storeManager={storeManager}/>
         <TaskDetails taskId={taskId} categoryId={categoryId} storeManager={storeManager}/>

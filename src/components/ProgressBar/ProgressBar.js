@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './ProgressBar.css';
+import {reducerName, taskListReducer} from '../TaskList/taskListReducer';
 
 class ProgressBarComponent extends React.Component {
   static propTypes = {
@@ -9,24 +11,20 @@ class ProgressBarComponent extends React.Component {
     max: PropTypes.number
   };
 
-  constructor(props){
-    super(props);
-    const min = this.props.min||0;
-    const max = this.props.max||100;  
-    let value = this.props.done;
-    let scale = value/(max-min)*100;
-    this.state = {
-      min: min,
-      max: max,
-      value: value,
-      scale: scale};
+  static defaultProps = {
+    min: 0,
+    max: 100,
+  };
+
+  componentWillMount(){
+    this.props.storeManager.addReducer(reducerName, taskListReducer);
   }
 
   render() {
     return (
       <div className={s.progress} role="progressbar"
-      aria-valuemin={this.state.min} aria-valuemax={this.state.max} 
-      aria-valuenow={this.state.value}>
+      aria-valuemin={this.props.min} aria-valuemax={this.props.max} 
+      aria-valuenow={this.props.done}>
         <div className={s.done}  style={{ width: `${this.props.done}%` }} >
         </div>
         <div className={s.pending} style={{ width: `${100 - this.props.done}%` }} >
@@ -36,4 +34,17 @@ class ProgressBarComponent extends React.Component {
   }
 }
 
-export const ProgressBar = withStyles(s)(ProgressBarComponent);
+const mapState = (state, ownProps) => {
+  const tasksCount = state[reducerName] && Object.keys(state[reducerName].tasks).length || 0;
+  let done =  state[reducerName] && Object.keys(state[reducerName].tasks)
+    .filter(i => state[reducerName].tasks[i].done).length || 0;
+
+  done = tasksCount && done/tasksCount*100 || 0;
+  return {
+    min: 0,
+    max: 100,
+    done,
+  }
+};
+
+export const ProgressBar = connect(mapState)(withStyles(s)(ProgressBarComponent));

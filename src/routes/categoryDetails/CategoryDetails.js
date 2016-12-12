@@ -18,7 +18,7 @@ export const CategoryDetails = withStyles(s)(({storeManager, splitterId, categor
         <CheckBox checked={false} label={`active only`} id={s.title} />
         <Search />
       </Header>
-      <ProgressBar done={7} />
+      <ProgressBar storeManager={storeManager} />
       <SplitPage id={splitterId}>
         <CategoryTree categoryId={categoryId} add={true} storeManager={storeManager}/>
         <TaskList categoryId={categoryId} taskId={taskId} storeManager={storeManager}></TaskList>

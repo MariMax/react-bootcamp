@@ -17,7 +17,7 @@ export const Home = withStyles(s)(({storeManager}) => {
         <CheckBox checked={false} label={`active only`} id={s.title} />
         <Search />
       </Header>
-      <ProgressBar done={9} />
+      <ProgressBar storeManager={storeManager} />
       <SplitPage id="homePageSplitter" >
         <CategoryTree add={true} storeManager={storeManager} />
       </SplitPage>

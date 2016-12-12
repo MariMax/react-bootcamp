@@ -13,8 +13,10 @@
 
 .done{
     background-color: var(--sharp-blue);
+    transition: all .5s ease-in-out;
 }
 
 .pending{
     background-color: var(--light-gray);
+    transition: all .5s ease-in-out;
 }
