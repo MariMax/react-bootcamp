@@ -10,10 +10,8 @@ class ListItemComponent extends React.Component {
     title: PropTypes.string,
     id: PropTypes.string,
     done: PropTypes.bool,
-    selectRoute: PropTypes.string,
     changeState: PropTypes.func,
     editRoute: PropTypes.string,
-    selected: PropTypes.bool,
   };
 
   constructor(props) {
@@ -35,10 +33,10 @@ class ListItemComponent extends React.Component {
 
   render() {
     return (
-      <Link to={this.props.selectRoute} id={this.props.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
+      <div id={this.props.id} className={`${s.wrapper}`}>
         <CheckBox onChange={this.handleChange} label={this.props.title} checked={this.props.done} id={`${s.wrapper}${this.props.id}`} />
         <button className={s.edit} onClick={this.editTask}>edit</button>
-      </Link>
+      </div>
     );
   }
 }

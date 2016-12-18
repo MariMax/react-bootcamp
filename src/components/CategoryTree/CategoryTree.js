@@ -6,7 +6,8 @@ import { TreeItem } from '../TreeItem';
 import { EditTreeItem } from '../EditTreeItem';
 import s from './CategoryTree.css';
 import { reducerName, categoryReducer } from './CategoryReducer';
-import { addCategory } from './CategoryActions';
+import { addCategory, removeCategory } from './CategoryActions';
+import history from '../../core/history';
 
 class CategoryTreeComponent extends React.Component {
   static propTypes = {
@@ -21,6 +22,7 @@ class CategoryTreeComponent extends React.Component {
     super(props);
 
     this.addCategory = this.addCategory.bind(this);
+    this.removeCategory = this.removeCategory.bind(this);
   }
 
   componentWillMount() {
@@ -31,13 +33,26 @@ class CategoryTreeComponent extends React.Component {
     return this.props.addCategory(null, categoryName);
   }
 
+  removeCategory(categoryId) {
+    this.props.removeCategory(categoryId);
+    if (this.props.categoryId === categoryId) {
+      history.push('/');
+    }
+  }
+
   buildList(items, level, allItems) {
     if (!items || Object.keys(items).length === 0) return null;
     return items.map(item => {
       return item && (
         <div key={item.id} className={s['items-block']}>
           {this.props.edit !== item.id ?
-            <TreeItem className={s['tree-item']} level={level} item={item} selected={item.id === this.props.categoryId} reducerName={reducerName} /> :
+            <TreeItem
+              className={s['tree-item']}
+              level={level}
+              item={item}
+              removeCategory={this.removeCategory}
+              selected={item.id === this.props.categoryId}
+              reducerName={reducerName} /> :
             <EditTreeItem className={s['tree-item']} item={item} reducerName={reducerName} />}
           {this.props.expandedItems.find(i => i === item.id) && this.buildList(item.children.map(i => allItems.find(item => item && item.id === i)), level + 1, allItems)}
         </div>
@@ -46,9 +61,7 @@ class CategoryTreeComponent extends React.Component {
   }
 
   render() {
-
     const items = this.buildList(this.props.items.filter(i => i && !i.parent), 0, this.props.items);
-
     return (
       <section className={s.wrapper}>
         {this.props.add && <div className={s['add-item']}>
@@ -71,6 +84,7 @@ const mapState = (state) => ({
 
 const mapDispatch = {
   addCategory,
+  removeCategory,
 };
 
 export const CategoryTree = connect(mapState, mapDispatch)(withStyles(s)(CategoryTreeComponent));

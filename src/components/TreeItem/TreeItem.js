@@ -6,7 +6,6 @@ import {
   expandCategory,
   collapseCategory,
   editCategory,
-  removeCategory,
   addCategory,
 } from '../CategoryTree/CategoryActions';
 import { connect } from 'react-redux';
@@ -84,7 +83,6 @@ const mapDispatch = {
   expandCategory,
   collapseCategory,
   editCategory,
-  removeCategory,
   addCategory
 };
 
