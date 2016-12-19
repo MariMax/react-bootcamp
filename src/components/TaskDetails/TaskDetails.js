@@ -58,7 +58,7 @@ class TaskDetailsComponent extends React.Component {
   }
 
   cancel() {
-    history.push(`/Category/${this.props.categoryId}/task/${this.props.taskId}`);
+    history.push(`/Category/${this.props.categoryId}`);
   }
 
   render() {

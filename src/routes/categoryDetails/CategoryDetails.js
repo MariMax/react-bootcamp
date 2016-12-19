@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { Header } from '../../components/Header';
 import { Search } from '../../components/Search';
@@ -7,22 +7,60 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { SplitPage } from '../../components/SplitPage';
 import { CategoryTree } from '../../components/CategoryTree';
 import { TaskList } from '../../components/TaskList';
+import { buildQueryString } from '../../core/helpers/buildQueryString';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './CategoryDetails.css';
+import history from '../../core/history';
 
-export const CategoryDetails = withStyles(s)(({storeManager, splitterId, categoryId, title, taskId}) => {
-  return (
-    <div className={s.root}>
-      <Header>
-        <h1 className={s.title}>{title}</h1>
-        <CheckBox checked={false} label={`active only`} id={s.title} />
-        <Search />
-      </Header>
-      <ProgressBar storeManager={storeManager} />
-      <SplitPage id={splitterId}>
-        <CategoryTree categoryId={categoryId} add={true} storeManager={storeManager}/>
-        <TaskList categoryId={categoryId} taskId={taskId} storeManager={storeManager}></TaskList>
-      </SplitPage>
-    </div>
-  )
-});
+class CategoryDetailsComponent extends Component {
+  static propTypes = {
+    storeManager: PropTypes.shape({
+      addReducer: PropTypes.func,
+    }),
+    splitterId: PropTypes.string,
+    categoryId: PropTypes.string,
+    title: PropTypes.string,
+    showDone: PropTypes.bool,
+    searchTerm: PropTypes.string,
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = { showDone: this.props.showDone, searchTerm: this.props.searchTerm };
+    this.handleShowDoneChange = this.handleShowDoneChange.bind(this);
+  }
+
+  handleShowDoneChange(value) {
+    this.setState({ showDone: value });
+    const query = buildQueryString(value && { name: 'showDone', value }, this.state.searchTerm && { name: 'searchTerm', value: this.state.searchTerm });
+    history.push(`/Category/${this.props.categoryId}${query}`);
+  }
+
+  render() {
+    const {storeManager, splitterId, categoryId, title, taskId, showDone, searchTerm} = this.props;
+    return (
+      <div className={s.root}>
+        <Header>
+          <h1 className={s.title}>{title}</h1>
+          <CheckBox onChange={this.handleShowDoneChange} checked={showDone} label={`show done`} id={s.title} />
+          <Search />
+        </Header>
+        <ProgressBar storeManager={storeManager} />
+        <SplitPage id={splitterId}>
+          <CategoryTree
+            categoryId={categoryId}
+            showDone={this.state.showDone}
+            add={true}
+            storeManager={storeManager} />
+          <TaskList
+            categoryId={categoryId}
+            showDone={this.state.showDone}
+            storeManager={storeManager}></TaskList>
+        </SplitPage>
+      </div>
+    )
+  }
+}
+
+
+export const CategoryDetails = withStyles(s)(CategoryDetailsComponent);

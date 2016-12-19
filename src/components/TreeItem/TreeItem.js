@@ -63,7 +63,7 @@ class TreeItemComponent extends React.Component {
 
   render() {
     return (
-      <Link to={`/Category/${this.props.item.id}/task`} id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
+      <Link to={`/Category/${this.props.item.id}`} id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
         <button onClick={this.expandHandle} className={s.expand} dangerouslySetInnerHTML={{ __html: this.props.expanded ? this.collapseIcon : this.expandIcon }} />
         {[...(new Array(this.props.level)).keys()].map((i, index) => <div key={index} className={s.deep}></div>)}
         <span className={s.title}>{this.props.item.title}</span>

@@ -7,14 +7,12 @@ import { setActiveSide, RIGHT_ACTIVE } from '../../components/SplitPage/reducer'
 
 export default {
 
-  path: '/Category/:id/task/:taskId?',
+  path: '/Category/:id',
 
-  async action({params, storeManager}) {
+  async action({params, storeManager, query}) {
     const splitterId = `categoryDetailsPageSplitter`;
     const title = `Category Details`;
-    
     setTimeout(_ => storeManager.dispatch(setActiveSide(splitterId, RIGHT_ACTIVE)), 100);
-
     return {
       title,
       component: (
@@ -22,8 +20,9 @@ export default {
           <CategoryDetails
             title={title}
             categoryId={params.id}
-            taskId={params.taskId}
             splitterId={splitterId}
+            showDone = {!!query.showDone}
+            searchTerm = {query.searchTerm}
             storeManager={storeManager} />
         </Layout>
       ),
