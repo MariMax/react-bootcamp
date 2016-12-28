@@ -12,6 +12,7 @@ class TaskListComponent extends React.Component {
   static propTypes = {
     categoryId: PropTypes.string.isRequired,
     taskId: PropTypes.string,
+    showDone: PropTypes.bool,
     storeManager: PropTypes.shape({
       addReducer: PropTypes.func,
     }),
