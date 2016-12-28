@@ -6,6 +6,7 @@ import { ListItem } from '../ListItem';
 import s from './TaskList.css';
 import { reducerName, taskListReducer } from './taskListReducer';
 import { addTask, changeTaskState } from './taskListActions';
+import { getFilteredTasks } from '../../core/helpers/getFilteredTasks';
 
 
 class TaskListComponent extends React.Component {
@@ -57,9 +58,8 @@ class TaskListComponent extends React.Component {
 }
 
 const mapState = (state, ownProps) => ({
-  items: state[reducerName] && Object.keys(state[reducerName].tasks)
-    .filter(i => state[reducerName].tasks[i].categoryId === ownProps.categoryId)
-    .map(i => state[reducerName].tasks[i]) || []
+  items: state[reducerName] && getFilteredTasks(Object.keys(state[reducerName].tasks)
+    .map(i => state[reducerName].tasks[i]), ownProps.categoryId, ownProps.showDone, ownProps.searchTerm) || []
 });
 
 const mapDispatch = {
