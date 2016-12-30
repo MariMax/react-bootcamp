@@ -27,12 +27,22 @@ class HomeComponent extends Component {
     super(props);
     this.state = { showDone: this.props.showDone, searchTerm: this.props.searchTerm };
     this.handleShowDoneChange = this.handleShowDoneChange.bind(this);
+    this.searchHandler = this.searchHandler.bind(this);
+  }
+
+  redirectToQuery(){
+    const query = buildQueryString(this.state.showDone && { name: 'showDone', value:this.state.showDone }, this.state.searchTerm && { name: 'searchTerm', value: this.state.searchTerm });
+    history.push(`/${query}`);
   }
 
   handleShowDoneChange(value) {
     this.setState({ showDone: value });
-    const query = buildQueryString(value && { name: 'showDone', value }, this.state.searchTerm && { name: 'searchTerm', value: this.state.searchTerm });
-    history.push(`/${query}`);
+    this.redirectToQuery();
+  }
+
+  searchHandler(value) {
+    this.setState({ searchTerm: value });
+    this.redirectToQuery();
   }
 
   render() {
@@ -42,12 +52,13 @@ class HomeComponent extends Component {
         <Header>
           <h1 className={s.title}>To Do List</h1>
           <CheckBox onChange={this.handleShowDoneChange} checked={false} label={`show done`} id={s.title} />
-          <Search />
+          <Search search={this.searchHandler} value={this.state.searchTerm}/>
         </Header>
         <ProgressBar storeManager={storeManager} />
         <SplitPage id="homePageSplitter" >
           <CategoryTree
             showDone={this.state.showDone}
+            searchTerm={this.state.searchTerm}
             add={true}
             storeManager={storeManager} />
         </SplitPage>

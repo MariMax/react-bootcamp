@@ -1,4 +1,5 @@
 import { getParentCategories } from './getParentCategories';
+import { getFilteredTasks } from './getFilteredTasks';
 
 export const getFilteredCategories = (state, categoryStore, taskStore, showDone = false, searchTerm = '') => {
     const fullList = Object.keys(state[categoryStore].items).map(i => state[categoryStore].items[i]);
@@ -15,16 +16,7 @@ export const getFilteredCategories = (state, categoryStore, taskStore, showDone 
 
     const categoriesWithTasks = fullList
         .filter(i => emptyCategories.indexOf(i) < 0)
-        .filter(i => {
-            //if we do not show executed tasks and all tasks in this category are done we 
-            // do not show this category
-            if (showDone === false && fullTaskList
-                .filter(t => t.categoryId === i.id)
-                .every(t => t.done)) return false;
-            //filter tasks with searchTerm later
-
-            return true;
-        })
+        .filter(i => getFilteredTasks(fullTaskList, i.id, showDone, searchTerm).length)
         .reduce((result, item) => {
             return [...result, item, ...getParentCategories(state[categoryStore].items, item.parent)];
         }, []);

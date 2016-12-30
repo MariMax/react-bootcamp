@@ -28,12 +28,22 @@ class CategoryDetailsComponent extends Component {
     super(props);
     this.state = { showDone: this.props.showDone, searchTerm: this.props.searchTerm };
     this.handleShowDoneChange = this.handleShowDoneChange.bind(this);
+    this.searchHandler = this.searchHandler.bind(this);
+  }
+
+  redirectToQuery() {
+    const query = buildQueryString(this.state.showDone && { name: 'showDone', value: this.state.showDone }, this.state.searchTerm && { name: 'searchTerm', value: this.state.searchTerm });
+    history.push(`/Category/${this.props.categoryId}${query}`);
+  }
+
+  searchHandler(value) {
+    this.setState({ searchTerm: value });
+    this.redirectToQuery();
   }
 
   handleShowDoneChange(value) {
     this.setState({ showDone: value });
-    const query = buildQueryString(value && { name: 'showDone', value }, this.state.searchTerm && { name: 'searchTerm', value: this.state.searchTerm });
-    history.push(`/Category/${this.props.categoryId}${query}`);
+    this.redirectToQuery();
   }
 
   render() {
@@ -43,18 +53,20 @@ class CategoryDetailsComponent extends Component {
         <Header>
           <h1 className={s.title}>{title}</h1>
           <CheckBox onChange={this.handleShowDoneChange} checked={showDone} label={`show done`} id={s.title} />
-          <Search />
+          <Search search={this.searchHandler} value={searchTerm}/>
         </Header>
         <ProgressBar storeManager={storeManager} />
         <SplitPage id={splitterId}>
           <CategoryTree
             categoryId={categoryId}
             showDone={this.state.showDone}
+            searchTerm={this.state.searchTerm}
             add={true}
             storeManager={storeManager} />
           <TaskList
             categoryId={categoryId}
             showDone={this.state.showDone}
+            searchTerm={this.state.searchTerm}
             storeManager={storeManager}></TaskList>
         </SplitPage>
       </div>
