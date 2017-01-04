@@ -1,0 +1,6 @@
+{
+  "name": "RemoveConfirmation",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./RemoveConfirmation.js"
+}

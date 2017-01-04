@@ -18,13 +18,6 @@
   transform: translateX(0%);
 }
 
-.wrapper button{
-  display: none;
-}
-
-.wrapper.active button{
-  display: block;
-}
 
 .toast {
   background: var(--white);
@@ -47,22 +40,4 @@
 }
 .error{
   border-left-color: var(--plum)
-}
-
-.close{
-  outline: 0;
-  cursor: pointer;
-  display: inline-block;
-  background: 0;
-  transition: .3s ease;
-  font-size: 0;
-  position: absolute;
-  top: .3rem;
-  right: .3rem;
-  overflow: hidden;
-  border: none;
-}
-
-.close:before{
-  font-size: 0;
 }

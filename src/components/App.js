@@ -1,5 +1,4 @@
 import React, { PureComponent, PropTypes } from 'react';
-import { Toaster } from './Toaster';
 import { SwUpdateNotification } from './SwUpdateNotification';
 
 const ContextType = {
@@ -51,7 +50,6 @@ class App extends PureComponent {
     return (
       <main>
         <SwUpdateNotification/>
-        <Toaster stateName="Toaster"/>
         {this.props.children}
       </main>
     )

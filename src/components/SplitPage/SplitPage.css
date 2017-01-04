@@ -37,7 +37,7 @@
 
 
 .left{
-  transform: translateX(-100%);
+  opacity:0;
 }
 
 .right-side{}
@@ -52,7 +52,7 @@
 
 .wrapper section:nth-child(1):nth-last-child(1),
 .left.active{
-  transform: translateX(0)
+  opacity: 1;
 }
 
 .right.active{
@@ -70,10 +70,14 @@
     flex-basis: 50%;
     flex-shrink: 1;
   }
-  .right,
-  .right.active,
+
   .left,
   .left.active{
-    transform: translateX(0)
+    opacity:1;
+  }
+
+  .right,
+  .right.active{
+    transform: translateX(0);
   }
 }

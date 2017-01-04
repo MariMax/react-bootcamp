@@ -1,8 +1,21 @@
-import { PropTypes, Component } from 'react';
-import { showToaster, toasterTypes } from '../Toaster';
-import { connect } from 'react-redux';
+import React, { PropTypes, Component } from 'react';
+import { Toaster, toasterTypes } from '../Toaster';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import s from './styles.css';
 
 class SwUpdateNotificationComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { active: false }
+    this.onClose = this.onClose.bind(this);
+
+    this.closeIcon = `<use xlink:href="#icon-close"/>`;
+  }
+
+  onClose() {
+    this.setState({ active: false });
+  }
+
   componentDidMount() {
     const self = this;
     let version = null;
@@ -15,15 +28,26 @@ class SwUpdateNotificationComponent extends Component {
           version = evt.data.version;
         }
         if (version !== evt.data.version) {
-          self.props.showToaster(toasterTypes.success, 'Please refresh for better UX');
+          this.setState({ active: true });
         }
       };
     }
   }
 
   render() {
-    return null;
+    return (
+      this.state.active && <Toaster
+        onClose={this.onClose}
+        active={this.state.active}
+        >
+        <p>Please refresh for better UX</p>
+        <button className={s.close} onClick={this.onClose}>
+          <svg width="20" height="20" dangerouslySetInnerHTML={{ __html: this.closeIcon }} />
+          close
+          </button>
+      </Toaster>
+    )
   }
 }
 
-export const SwUpdateNotification = connect(null, { showToaster })(SwUpdateNotificationComponent);
+export const SwUpdateNotification = withStyles(s)(SwUpdateNotificationComponent);

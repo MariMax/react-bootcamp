@@ -1,0 +1,17 @@
+@import '../variables.css';
+
+.buttons{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttons button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.buttons button:first-child{
+  margin-right: 1rem;
+}

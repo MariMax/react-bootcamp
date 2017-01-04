@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './TreeItem.css';
 import { Link } from '../Link';
+import { RemoveConfirmation } from '../RemoveConfirmation';
 import {
   expandCategory,
   collapseCategory,
@@ -26,6 +27,7 @@ class TreeItemComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = { confirm: false };
 
     this.expandIcon = `<svg width="20" height="20"><use xlink:href="#icon-expand"/></svg>`;
     this.collapseIcon = `<svg width="20" height="20"><use xlink:href="#icon-collapse"/></svg>`;
@@ -35,6 +37,8 @@ class TreeItemComponent extends React.Component {
     this.addNested = this.addNested.bind(this);
     this.edit = this.edit.bind(this);
     this.remove = this.remove.bind(this);
+    this.confirmRemove = this.confirmRemove.bind(this);
+    this.closeConfirmation = this.closeConfirmation.bind(this);
   }
 
   expandHandle(event) {
@@ -57,21 +61,32 @@ class TreeItemComponent extends React.Component {
   }
 
   remove(event) {
+    return this.props.removeCategory(this.props.item.id);
+  }
+
+  confirmRemove(event) {
     event.preventDefault();
     event.stopPropagation();
-    return this.props.removeCategory(this.props.item.id);
+    this.setState({ confirm: true });
+  }
+
+  closeConfirmation() {
+    this.setState({ confirm: false });
   }
 
   render() {
     return (
-      <Link to={`/Category/${this.props.item.id}${this.props.query}`} id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
-        <button onClick={this.expandHandle} className={s.expand} dangerouslySetInnerHTML={{ __html: this.props.expanded ? this.collapseIcon : this.expandIcon }} />
-        {[...(new Array(this.props.level)).keys()].map((i, index) => <div key={index} className={s.deep}></div>)}
-        <span className={s.title}>{this.props.item.title}</span>
-        <button onClick={this.edit} className={s.edit}>edit</button>
-        <button onClick={this.remove} className={s.remove}>remove</button>
-        <button onClick={this.addNested} className={s.add} dangerouslySetInnerHTML={{ __html: this.plusIcon }} />
-      </Link>
+      <div>
+        <Link to={`/Category/${this.props.item.id}${this.props.query}`} id={this.props.item.id} className={`${s.wrapper} ${this.props.selected ? s.selected : ''}`}>
+          <button onClick={this.expandHandle} className={s.expand} dangerouslySetInnerHTML={{ __html: this.props.expanded ? this.collapseIcon : this.expandIcon }} />
+          {[...(new Array(this.props.level)).keys()].map((i, index) => <div key={index} className={s.deep}></div>)}
+          <span className={s.title}>{this.props.item.title}</span>
+          <button onClick={this.edit} className={s.edit}>edit</button>
+          <button onClick={this.confirmRemove} className={s.remove}>remove</button>
+          <button onClick={this.addNested} className={s.add} dangerouslySetInnerHTML={{ __html: this.plusIcon }} />
+        </Link>
+        {this.state.confirm && <RemoveConfirmation onConfirm={this.remove} onCancel={this.closeConfirmation} text="Are you sure if you want to remove it?" />}
+      </div>
     );
   }
 }
