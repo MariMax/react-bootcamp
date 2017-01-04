@@ -66,6 +66,7 @@ const removeCategory = (items, categoryId) => {
   return Object.keys(items).reduce((result, key)=>{
     if (items[key]){
       result[key] = items[key];
+      result[key].children = result[key].children.filter(i=>i!==categoryId);
       return result;
     }
     return result;
