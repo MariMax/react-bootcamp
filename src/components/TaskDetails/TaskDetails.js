@@ -7,6 +7,8 @@ import { MaterialInput } from '../MaterialInput';
 import { MaterialTextArea } from '../MaterialTextArea';
 import { connect } from 'react-redux';
 import { reducerName, taskListReducer } from '../TaskList/taskListReducer';
+import { setModelState } from './taskDetailsActions';
+import { reducerName as detailsReducer, taskDetailsReducer } from './taskDetailsReducer';
 import { updateTask } from '../TaskList/taskListActions';
 
 
@@ -22,15 +24,22 @@ class TaskDetailsComponent extends React.Component {
     this.disableFormSubmit = this.disableFormSubmit.bind(this);
     this.save = this.save.bind(this);
     this.cancel = this.cancel.bind(this);
+  }
+
+  componentWillMount() {
     this.model = {
       title: this.props.title,
       description: this.props.description,
       done: this.props.done,
+      categoryId: this.props.categoryId,
     };
+
+    this.props.storeManager.addReducer(reducerName, taskListReducer);
+    this.props.storeManager.addReducer(detailsReducer, taskDetailsReducer, this.props.setModelState(this.model));
   }
 
-  componentWillMount() {
-    this.props.storeManager.addReducer(reducerName, taskListReducer);
+  componentWillUnmount(){
+    this.props.storeManager.removeReducer(detailsReducer);
   }
 
   disableFormSubmit(event) {
@@ -42,27 +51,29 @@ class TaskDetailsComponent extends React.Component {
 
   handleTitleChange(value) {
     this.model.title = value;
+    this.props.setModelState({categoryId: this.props.categoryId, ...this.model, ...this.props.model});
   }
 
   handleDescriptionChange(value) {
     this.model.description = value;
+    this.props.setModelState({categoryId: this.props.categoryId, ...this.model, ...this.props.model});
   }
 
   handleCompletion(value) {
     this.model.done = value;
+    this.props.setModelState({categoryId: this.props.categoryId, ...this.model, ...this.props.model});
   }
 
   save() {
-    this.props.save({id:this.props.taskId, ...this.model});
+    this.props.save({ id: this.props.taskId, ...this.props.model });
     this.cancel();
   }
 
   cancel() {
-    history.push(`/Category/${this.props.categoryId}`);
+    history.push(`/Category/${this.props.model.categoryId}`);
   }
 
   render() {
-    console.log(this.props.title);
     return (
       <section className={s.wrapper}>
         <form name="task-details">
@@ -72,7 +83,7 @@ class TaskDetailsComponent extends React.Component {
               <MaterialInput
                 focus={true}
                 id={`Title${this.props.taskId}`}
-                value={this.props.title}
+                value={this.model.title}
                 onChange={this.handleTitleChange}
                 label="Task title"
                 />
@@ -82,14 +93,14 @@ class TaskDetailsComponent extends React.Component {
               <CheckBox
                 onChange={this.handleCompletion}
                 label="Completed"
-                checked={this.props.done}
+                checked={this.model.done}
                 id={`Completed${this.props.taskId}`} />
             </div>
 
             <div className={s['form-control']}>
               <MaterialTextArea
                 id={`Description${this.props.taskId}`}
-                value={this.props.description}
+                value={this.model.description}
                 onChange={this.handleDescriptionChange}
                 label="Task description"
                 />
@@ -116,15 +127,18 @@ class TaskDetailsComponent extends React.Component {
 
 const mapState = (state, ownProps) => {
   const task = state[reducerName] && state[reducerName].tasks[ownProps.taskId];
+  const details = state[detailsReducer];
   return {
     title: task && task.title,
     done: task && task.done,
     description: task && task.description,
+    model: details,
   }
 };
 
 const mapDispatch = {
   save: updateTask,
+  setModelState,
 }
 
 export const TaskDetails = connect(mapState, mapDispatch)(withStyles(s)(TaskDetailsComponent));
