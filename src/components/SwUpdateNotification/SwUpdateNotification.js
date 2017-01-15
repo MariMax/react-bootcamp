@@ -8,12 +8,18 @@ class SwUpdateNotificationComponent extends Component {
     super(props);
     this.state = { active: false }
     this.onClose = this.onClose.bind(this);
+    this.onReload = this.onReload.bind(this);
 
     this.closeIcon = `<use xlink:href="#icon-close"/>`;
+    this.reloadIcon = `<use xlink:href="#icon-reload"/>`;
   }
 
   onClose() {
     this.setState({ active: false });
+  }
+
+  onReload() {
+    window.location.reload(true);
   }
 
   componentDidMount() {
@@ -45,6 +51,13 @@ class SwUpdateNotificationComponent extends Component {
           <svg width="20" height="20" dangerouslySetInnerHTML={{ __html: this.closeIcon }} />
           close
           </button>
+        <div className={s.buttons}>
+          <button onClick={this.onReload}>
+            <svg width="15" height="15" dangerouslySetInnerHTML={{ __html: this.reloadIcon }} />
+            reload
+          </button>
+        </div>
+
       </Toaster>
     )
   }
